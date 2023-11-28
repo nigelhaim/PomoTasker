@@ -13,6 +13,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: PomodoroScreen()); //To edit this screen open pomodoroscreen.dart
+        home: PomoTasker()); //To edit this screen open pomodoroscreen.dart
   }
 }
