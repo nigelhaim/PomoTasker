@@ -2,9 +2,18 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:pomotasker/data/database.dart';
+import 'package:pomotasker/util/todo_tile.dart';
 import 'style_utils.dart';
+
+//Import timer features
 import 'package:custom_timer/custom_timer.dart';
 
+//Import to-do features
+import '/util/todo_tile.dart';
+import '/util/dialog_box.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import '/data/database.dart';
 // Expanded timer() {
 //   return Expanded(
 //       child: Row(children: <Widget>[
@@ -60,27 +69,95 @@ class _MyTimerState extends State<PomoTasker>
     super.dispose();
   }
 
+  //reference the hive box
+  final _taskBox = Hive.box('pomobox');
+  ToDoDatabase db = ToDoDatabase();
+
+  @override
+  void initState() {
+    // if this is the 1st time ever opening the app, then create default data
+    if (_taskBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      // There is already existing data
+      db.loadData();
+    }
+    super.initState();
+  }
+
+  //Text Editing controller
+  final _tcontroller = TextEditingController();
+
+  void checkBoxChanged(bool? value, int index) {
+    setState(() {
+      db.toDoList[index][1] = !db.toDoList[index][1];
+    });
+  }
+
+  //Save new task
+  void saveNewTask() {
+    setState(() {
+      db.toDoList.add([_tcontroller.text, false]);
+    });
+    Navigator.of(context).pop();
+    db.updateDataBase();
+  }
+
+  void createNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _tcontroller,
+            onSave: saveNewTask,
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        });
+  }
+
+  void taskComplete(int index) {
+    setState(() {
+      db.toDoList.removeAt(index);
+    });
+    db.updateDataBase();
+  }
+
   @override
   Widget build(BuildContext) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor:
-                Colors.greenAccent, //To be changed in the preffered theme color
-            title: Text(
-              "PomoTasker",
-              style: textStyle(24, Colors.redAccent,
-                  FontWeight.w700), //Refer on the utils.dart file
-            ),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor:
+              Colors.greenAccent, //To be changed in the preffered theme color
+          title: Text(
+            "PomoTasker",
+            style: textStyle(24, Colors.redAccent,
+                FontWeight.w700), //Refer on the utils.dart file
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              BuildCustomTimer(_controller),
-            ],
-          )),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            BuildCustomTimer(_controller),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: db.toDoList.length,
+              itemBuilder: (context, index) {
+                return ToDoTile(
+                  taskName: db.toDoList[index][0],
+                  taskCompleted: db.toDoList[index][1],
+                  onChanged: (value) => checkBoxChanged(value, index),
+                  taskCompleteFunction: (context) => taskComplete(index),
+                );
+              },
+            ),
+            FloatingActionButton(
+                onPressed: createNewTask, child: Icon(Icons.add)),
+          ],
+        ),
+      ),
     );
   }
 }
