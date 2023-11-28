@@ -1,5 +1,10 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
+/**
+ * This is the database part of the to-do list 
+ * it handles the laoding and updating functions 
+ * for the database no need for front-end to touch this
+ */
 class ToDoDatabase {
   List toDoList = [];
 
