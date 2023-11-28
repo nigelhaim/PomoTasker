@@ -86,11 +86,11 @@ class _MyTimerState extends State<PomoTasker>
 }
 
 Expanded BuildCustomTimer(CustomTimerController _controller) {
-  String TimerType = "Time to Work! ";
   bool working = true;
   bool shortBreak = false;
   bool longBreak = false;
   bool pressedOnce = false;
+  String timerType = "Working";
   _controller.state.addListener(() {
     if (_controller.state.value == CustomTimerState.finished) {
       // print("The " + _controller.state.value.toString());
@@ -99,12 +99,13 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
           print("Back to work!");
           working = true;
           _controller.jumpTo(Duration(seconds: 20));
-          _controller.start();
           pressedOnce = false;
+          timerType = "Working";
         } else if (working && !shortBreak) {
           print("ShortBreak");
           working = false;
           shortBreak = true;
+          timerType = "Short Break";
           _controller.jumpTo(Duration(seconds: 8));
           _controller.start();
           pressedOnce = false;
@@ -114,6 +115,7 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
           shortBreak = false;
           _controller.jumpTo(Duration(seconds: 12));
           _controller.start();
+          timerType = "Long Break";
           pressedOnce = false;
         }
       } else {
@@ -129,7 +131,7 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
           builder: (state, remaining) {
             return Column(
               children: [
-                Text(TimerType),
+                Text(timerType),
                 // Text("${state.name}", style: TextStyle(fontSize: 24)),
                 Text("${remaining.minutes}:${remaining.seconds}",
                     style: TextStyle(fontSize: 24)),
