@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+/**
+ * This is handles the tile of the to-do list in the main screen 
+ * it uses a flutter_slidable package
+ * TODO: IMPROVE THE SLIDING PART
+ * TODO: MAKE A BUTTON THAT OPENS THE FORM FOR THE EDIT
+ */
 class ToDoTile extends StatelessWidget {
   final String taskName;
   final bool taskCompleted;
@@ -20,6 +26,7 @@ class ToDoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(8.0),
+        //This handles the slidable part of the program
         child: Slidable(
           endActionPane: ActionPane(
             motion: StretchMotion(),
@@ -34,14 +41,6 @@ class ToDoTile extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(24),
             child: Row(children: [
-              // checkbox
-              // Checkbox(
-              //   value: taskCompleted,
-              //   onChanged: onChanged,
-              //   activeColor: Colors.green,
-              // ),
-
-              //task name
               Text(taskName),
             ]),
             decoration: BoxDecoration(

@@ -1,4 +1,4 @@
-//This is where you can find the styling of the text
+//This is where you can find the styling of the text in the pomodoroscreen.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
