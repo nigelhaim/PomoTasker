@@ -1,17 +1,16 @@
 //Extends the main screen of the timer
 
-
 /**
  * This is the homepage the most complicated part of the flutter project
  * This is where the main structure of of the timer and the to-do list features
  */
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:pomotasker/pomodoroscreen.dart%20';
 import 'style_utils.dart';
 
 //Import timer features
 import 'package:custom_timer/custom_timer.dart';
-
 
 //Import to-do features
 import '/util/todo_tile.dart';
@@ -21,13 +20,13 @@ import '/data/database.dart';
 
 import 'package:pomotasker/util/todo_tile.dart';
 import 'package:pomotasker/data/database.dart';
+import 'package:pomotasker/util/task_Button.dart';
 
 //Runs the app
 void main() => runApp(PomoTasker());
 
 //Extends the StatefulWidget
 class PomoTasker extends StatefulWidget {
-
 //Initiates the state of the timer
   @override
   _MyTimerState createState() => _MyTimerState();
@@ -163,7 +162,6 @@ class _MyTimerState extends State<PomoTasker>
             style: textStyle(24, Colors.redAccent,
                 FontWeight.w700), //Refer on the utils.dart file
           ),
-
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -195,67 +193,11 @@ class _MyTimerState extends State<PomoTasker>
              * This is the button that generates the dialogue box
              */
             FloatingActionButton(
-                onPressed: createNewTask, child: Icon(Icons.add)),//Nigel's button 
-              taskButton(), //Angelo's button
+                onPressed: createNewTask, child: taskButton()), //Nigel's button
+            // taskButton(), //Angelo's button
           ],
         ),
       ),
-    );
-  }
-}
-
-
-/**
- * This handles the working and break times of the timer 
- * a small error here is the button double inputs for some reason
- * therefore I implemented pressedOnce boolean to prevent the double input
- */
-Expanded BuildCustomTimer(CustomTimerController _controller) {
-class taskButton extends StatelessWidget {
-  const taskButton({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Add Task'),
-          content: Column(
-            children: [
-              Text("Task Name"),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "Task Name",
-                ),
-              ),
-              Text("Date & Time"),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "mm/dd//yy hh:mm",
-                ),
-              ),
-              Text("Task Description"),
-              const TextField(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 50),
-                  hintText: "Insert your task description here",
-                ),
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      ),
-      child: const Text('Add Task'),
     );
   }
 }
@@ -272,21 +214,75 @@ class timerButtons extends StatelessWidget {
           content: Column(
             children: [
               const Text("Work Time"),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "25:00",
+              Container(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 25,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "25",
+                        ),
+                      ),
+                    ),
+                    Text(":"),
+                    Container(
+                      width: 25,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "00",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const Text("Short Break"),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "5:00",
+              Container(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 25,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "25",
+                        ),
+                      ),
+                    ),
+                    Text(":"),
+                    Container(
+                      width: 25,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "00",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const Text("Long Break"),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: "15:00",
+              Container(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 25,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "25",
+                        ),
+                      ),
+                    ),
+                    Text(":"),
+                    Container(
+                      width: 25,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "00",
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -308,7 +304,12 @@ class timerButtons extends StatelessWidget {
   }
 }
 
-Expanded buildCustomTimer(CustomTimerController _controller) {
+/**
+ * This handles the working and break times of the timer 
+ * a small error here is the button double inputs for some reason
+ * therefore I implemented pressedOnce boolean to prevent the double input
+ */
+Expanded BuildCustomTimer(CustomTimerController _controller) {
   bool working = true;
   bool shortBreak = false;
   bool longBreak = false;
@@ -379,7 +380,6 @@ Expanded buildCustomTimer(CustomTimerController _controller) {
     ]),
   );
 }
-
 
 /**
  * This is creates the button for the timer you can edit here for the front-end
