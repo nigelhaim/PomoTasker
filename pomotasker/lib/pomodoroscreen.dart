@@ -257,84 +257,167 @@ class timerButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
+      style: TextButton.styleFrom(
+        backgroundColor: Colors.redAccent,
+        foregroundColor: Colors.white,
+      ),
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Edit Timer'),
+          actionsAlignment: MainAxisAlignment.center,
+          backgroundColor: Colors.redAccent,
+          title: const Center(
+              child: Text(
+            'Edit Timer',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )),
           content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Work Time"),
+              const Text(
+                "Work Time",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
               Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 25,
+                      padding: EdgeInsets.only(right: 10),
+                      width: 90,
                       child: TextField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         controller: _workMinutes,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           hintText: workTime.inMinutes.toString(),
                         ),
                       ),
                     ),
-                    Text(":"),
+                    Text(":",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20)),
                     Container(
-                      width: 25,
+                      padding: EdgeInsets.only(left: 10),
+                      width: 90,
                       child: TextField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         controller: _workSeconds,
                         decoration: InputDecoration(
-                          hintText: workTime.inSeconds.toString(),
+                          border: InputBorder.none,
+                          hintText: '00',
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Text("Short Break"),
+              const Text(
+                "Short Break",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
               Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 25,
+                      padding: EdgeInsets.only(right: 10),
+                      width: 90,
                       child: TextField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         controller: _shortMinutes,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           hintText: shortTime.inMinutes.toString(),
                         ),
                       ),
                     ),
-                    Text(":"),
+                    Text(":",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20)),
                     Container(
-                      width: 25,
+                      padding: EdgeInsets.only(left: 10),
+                      width: 90,
                       child: TextField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         controller: _shortSeconds,
                         decoration: InputDecoration(
-                          hintText: shortTime.inSeconds.toString(),
+                          border: InputBorder.none,
+                          hintText: '00',
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Text("Long Break"),
+              const Text(
+                "Long Break",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
               Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 25,
+                      width: 90,
+                      padding: EdgeInsets.only(right: 10),
                       child: TextField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         controller: _longMinutes,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           hintText: longTime.inMinutes.toString(),
                         ),
                       ),
                     ),
-                    Text(":"),
+                    Text(
+                      ":",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                     Container(
-                      width: 25,
+                      width: 90,
+                      padding: EdgeInsets.only(left: 10),
                       child: TextField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         controller: _longSeconds,
                         decoration: InputDecoration(
-                          hintText: longTime.inSeconds.toString(),
+                          border: InputBorder.none,
+                          hintText: '00',
                         ),
                       ),
                     ),
@@ -344,11 +427,25 @@ class timerButtons extends StatelessWidget {
             ],
           ),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(0, 22, 71, 62),
+                disabledBackgroundColor: Colors.white,
+              ),
               onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(363636),
+                disabledBackgroundColor: Colors.white,
+              ),
               onPressed: () {
                 Navigator.pop(context, 'OK');
                 tb.updateWorkTimer(
@@ -358,7 +455,13 @@ class timerButtons extends StatelessWidget {
                 tb.updateLongTimer(
                     int.parse(_longMinutes.text), int.parse(_longSeconds.text));
               },
-              child: const Text('OK'),
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
@@ -438,7 +541,7 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
       const SizedBox(height: 24.0),
       Row(
         children: [
-          createButton("Start/Pause", _controller),
+          createButton("Start", _controller),
           createButton("Reset", _controller),
           createButton("Stop", _controller),
           timerButtons(),
@@ -460,7 +563,8 @@ Expanded createButton(String button, CustomTimerController _controller) {
         foregroundColor: Colors.white,
       ),
       onPressed: () {
-        if (button == "Start/Pause") {
+        if (button == "Start") {
+          const Text("Pause");
           _controller.start();
         } else if (button == "Pause") {
           _controller.pause();
