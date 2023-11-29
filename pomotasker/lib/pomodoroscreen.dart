@@ -134,7 +134,16 @@ class _MyTimerState extends State<PomoTasker>
   /**
    * This is the controller for the add task textbox
    */
-  final _tcontroller = TextEditingController();
+  final _title_controller = TextEditingController();
+  // final _month_controller = TextEditingController();
+  // final _day_controller = TextEditingController();
+  // final _year_controller = TextEditingController();
+  // final _hour_controller = TextEditingController();
+  // final _min_controller = TextEditingController();
+  // final _am_pm_controller = TextEditingController();
+  final _date_controller = TextEditingController();
+  final _time_controller = TextEditingController();
+  final _desc_controller = TextEditingController();
 
   //This is a checkbox of the previous version of the task manager DO NOT DELETE
   void checkBoxChanged(bool? value, int index) {
@@ -150,7 +159,19 @@ class _MyTimerState extends State<PomoTasker>
    */
   void saveNewTask() {
     setState(() {
-      db.toDoList.add([_tcontroller.text, false]);
+      db.toDoList.add([
+        _title_controller.text,
+        false,
+        // _month_controller.text,
+        // _day_controller.text,
+        // _year_controller.text,
+        // _hour_controller.text,
+        // _min_controller.text,
+        // _am_pm_controller.text,
+        _date_controller.text,
+        _time_controller.text,
+        _desc_controller.text
+      ]);
     });
     Navigator.of(context).pop();
     db.updateDataBase();
@@ -165,7 +186,16 @@ class _MyTimerState extends State<PomoTasker>
         context: context,
         builder: (context) {
           return DialogBox(
-            controller: _tcontroller,
+            title_controller: _title_controller,
+            // month_controller: _month_controller,
+            // day_controller: _day_controller,
+            // year_controller: _year_controller,
+            // hour_controller: _hour_controller,
+            // min_controller: _min_controller,
+            // am_pm_controller: _am_pm_controller,
+            date_controller: _date_controller,
+            time_controller: _time_controller,
+            desc_controller: _desc_controller,
             onSave: saveNewTask,
             onCancel: () => Navigator.of(context).pop(),
           );
@@ -230,7 +260,10 @@ class _MyTimerState extends State<PomoTasker>
              * This is the button that generates the dialogue box
              */
             FloatingActionButton(
-                onPressed: createNewTask, child: taskButton()), //Nigel's button
+                //TODO COMPLETE ADD TASK
+                // onPressed: createNewTask, child: taskButton()
+                onPressed: createNewTask,
+                child: Icon(Icons.add)), //Nigel's button
             // taskButton(), //Angelo's button
           ],
         ),
@@ -486,6 +519,7 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
     if (_controller.state.value == CustomTimerState.finished) {
       // print("The " + _controller.state.value.toString());
       workTime = getWorkTime();
+      _controller.begin = workTime;
       shortTime = getShortTime();
       longTime = getLongTime();
       if (pressedOnce) {

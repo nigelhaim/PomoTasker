@@ -13,8 +13,28 @@ class ToDoDatabase {
 
   void createInitialData() {
     toDoList = [
-      ["Make Tutorial", false],
-      ["Do Exercise", false],
+      [
+        "Make Tutorial",
+        false,
+        11,
+        22,
+        2023,
+        7,
+        00,
+        "PM",
+        "Make a tutorial for flutter"
+      ],
+      [
+        "Review Interpolation",
+        false,
+        11,
+        22,
+        2023,
+        10,
+        00,
+        "PM",
+        "Make a tutorial for flutter"
+      ],
     ];
   }
 
