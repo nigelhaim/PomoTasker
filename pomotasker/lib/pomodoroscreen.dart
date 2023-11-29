@@ -1,12 +1,6 @@
 //Extends the main screen of the timer
 
-/**
- * This is the homepage the most complicated part of the flutter project
- * This is where the main structure of of the timer and the to-do list features
- */
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:pomotasker/pomodoroscreen.dart%20';
 import 'style_utils.dart';
 
 //Import timer features
@@ -18,8 +12,6 @@ import '/util/dialog_box.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '/data/database.dart';
 
-import 'package:pomotasker/util/todo_tile.dart';
-import 'package:pomotasker/data/database.dart';
 import 'package:pomotasker/util/task_Button.dart';
 
 //Runs the app
@@ -40,6 +32,50 @@ class PomoTasker extends StatefulWidget {
  * that generates the timer and below it is the code of the to-do 
  * list
  */
+
+Duration getWorkTime() {
+  final _timerBox = Hive.box('pomobox');
+  TimerData tb = TimerData();
+  if (_timerBox.get("WORKTIMER") == null) {
+    tb.initWorkTime();
+  } else {
+    tb.loadWorkTimer();
+  }
+  final time = tb.loadWorkTimer();
+  Duration wt = Duration(minutes: time?['min'], seconds: time?['sec']);
+  return wt;
+}
+
+Duration getShortTime() {
+  final _timerBox = Hive.box('pomobox');
+  TimerData tb = TimerData();
+  if (_timerBox.get("SHORTTIMER") == null) {
+    tb.initShortTime();
+  } else {
+    tb.loadShortTimer();
+  }
+  final time = tb.loadShortTimer();
+  Duration wt = Duration(minutes: time?['min'], seconds: time?['sec']);
+  return wt;
+}
+
+Duration getLongTime() {
+  final _timerBox = Hive.box('pomobox');
+  TimerData tb = TimerData();
+  if (_timerBox.get("LONGTIMER") == null) {
+    tb.initLongTime();
+  } else {
+    tb.loadLongTimer();
+  }
+  final time = tb.loadLongTimer();
+  Duration wt = Duration(minutes: time?['min'], seconds: time?['sec']);
+  return wt;
+}
+
+Duration workTime = getWorkTime();
+Duration shortTime = getShortTime();
+Duration longTime = getLongTime();
+
 class _MyTimerState extends State<PomoTasker>
     with SingleTickerProviderStateMixin {
   int type = 0;
@@ -47,8 +83,9 @@ class _MyTimerState extends State<PomoTasker>
       /**
      * Sets the controller of the timer 
      */
+
       vsync: this,
-      begin: Duration(minutes: 00, seconds: 20), //Beginning of the timer
+      begin: workTime, //Beginning of the timer
       end: Duration(minutes: 00, seconds: 00), //Expected end of the timer
       initialState: CustomTimerState
           .reset, //Initial state is reset which is goes back to the begin time
@@ -203,7 +240,20 @@ class _MyTimerState extends State<PomoTasker>
 }
 
 class timerButtons extends StatelessWidget {
-  const timerButtons({super.key});
+  TextEditingController _workMinutes = TextEditingController();
+  TextEditingController _workSeconds = TextEditingController();
+  TextEditingController _shortMinutes = TextEditingController();
+  TextEditingController _shortSeconds = TextEditingController();
+  TextEditingController _longMinutes = TextEditingController();
+  TextEditingController _longSeconds = TextEditingController();
+
+  Duration workTime = getWorkTime();
+  Duration shortTime = getShortTime();
+  Duration longTime = getLongTime();
+
+  final _timerBox = Hive.box('pomobox');
+  TimerData tb = TimerData();
+  timerButtons({super.key});
   @override
   Widget build(BuildContext context) {
     return FilledButton(
@@ -219,18 +269,20 @@ class timerButtons extends StatelessWidget {
                   children: [
                     Container(
                       width: 25,
-                      child: const TextField(
+                      child: TextField(
+                        controller: _workMinutes,
                         decoration: InputDecoration(
-                          hintText: "25",
+                          hintText: workTime.inMinutes.toString(),
                         ),
                       ),
                     ),
                     Text(":"),
                     Container(
                       width: 25,
-                      child: const TextField(
+                      child: TextField(
+                        controller: _workSeconds,
                         decoration: InputDecoration(
-                          hintText: "00",
+                          hintText: workTime.inSeconds.toString(),
                         ),
                       ),
                     ),
@@ -243,18 +295,20 @@ class timerButtons extends StatelessWidget {
                   children: [
                     Container(
                       width: 25,
-                      child: const TextField(
+                      child: TextField(
+                        controller: _shortMinutes,
                         decoration: InputDecoration(
-                          hintText: "25",
+                          hintText: shortTime.inMinutes.toString(),
                         ),
                       ),
                     ),
                     Text(":"),
                     Container(
                       width: 25,
-                      child: const TextField(
+                      child: TextField(
+                        controller: _shortSeconds,
                         decoration: InputDecoration(
-                          hintText: "00",
+                          hintText: shortTime.inSeconds.toString(),
                         ),
                       ),
                     ),
@@ -267,18 +321,20 @@ class timerButtons extends StatelessWidget {
                   children: [
                     Container(
                       width: 25,
-                      child: const TextField(
+                      child: TextField(
+                        controller: _longMinutes,
                         decoration: InputDecoration(
-                          hintText: "25",
+                          hintText: longTime.inMinutes.toString(),
                         ),
                       ),
                     ),
                     Text(":"),
                     Container(
                       width: 25,
-                      child: const TextField(
+                      child: TextField(
+                        controller: _longSeconds,
                         decoration: InputDecoration(
-                          hintText: "00",
+                          hintText: longTime.inSeconds.toString(),
                         ),
                       ),
                     ),
@@ -293,7 +349,15 @@ class timerButtons extends StatelessWidget {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
+              onPressed: () {
+                Navigator.pop(context, 'OK');
+                tb.updateWorkTimer(
+                    int.parse(_workMinutes.text), int.parse(_workSeconds.text));
+                tb.updateShortTimer(int.parse(_shortMinutes.text),
+                    int.parse(_shortSeconds.text));
+                tb.updateLongTimer(
+                    int.parse(_longMinutes.text), int.parse(_longSeconds.text));
+              },
               child: const Text('OK'),
             ),
           ],
@@ -318,11 +382,14 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
   _controller.state.addListener(() {
     if (_controller.state.value == CustomTimerState.finished) {
       // print("The " + _controller.state.value.toString());
+      workTime = getWorkTime();
+      shortTime = getShortTime();
+      longTime = getLongTime();
       if (pressedOnce) {
         if (!working) {
           print("Back to work!");
           working = true;
-          _controller.jumpTo(const Duration(seconds: 20));
+          _controller.jumpTo(workTime);
           pressedOnce = false;
           timerType = "Working";
         } else if (working && !shortBreak) {
@@ -330,14 +397,14 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
           working = false;
           shortBreak = true;
           timerType = "Short Break";
-          _controller.jumpTo(const Duration(seconds: 8));
+          _controller.jumpTo(shortTime);
           _controller.start();
           pressedOnce = false;
         } else if (working && shortBreak && !longBreak) {
           print("LongBreak");
           working = false;
           shortBreak = false;
-          _controller.jumpTo(const Duration(seconds: 12));
+          _controller.jumpTo(longTime);
           _controller.start();
           timerType = "Long Break";
           pressedOnce = false;
@@ -399,6 +466,9 @@ Expanded createButton(String button, CustomTimerController _controller) {
           _controller.pause();
         } else if (button == "Reset") {
           _controller.reset();
+          workTime = getWorkTime();
+          shortTime = getShortTime();
+          longTime = getLongTime();
         } else if (button == "Stop") {
           _controller.finish();
           // print("Stop button pressed");

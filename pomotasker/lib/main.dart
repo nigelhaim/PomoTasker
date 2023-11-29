@@ -13,10 +13,11 @@ void main() async {
   await Hive.initFlutter();
 
   // Open a box
-  /**
+  /**x
    * Basically this is the database that saves the tasks on the phone 
    */
   var box = await Hive.openBox('pomobox');
+
   runApp(const MyApp());
 }
 
