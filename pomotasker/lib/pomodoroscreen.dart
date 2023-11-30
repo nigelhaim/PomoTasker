@@ -803,6 +803,8 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                 ),
               ),
 
+              SizedBox(width: 5, height: 5),
+
               Expanded(
                 // flex: 1,
 

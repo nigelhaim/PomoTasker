@@ -1,7 +1,31 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomotasker/pomodoroscreen.dart'; // Adjust the import path as needed
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      Duration(milliseconds: 1900), // Adjust the duration as needed
+          () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => PomoTasker(), // Navigate to your main screen
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,9 +39,8 @@ class SplashScreen extends StatelessWidget {
             flex: 1,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child:
-              Image(
-                image: AssetImage("assets/logo.png"),
+              child: Image(
+                image: AssetImage("assets/logo.png"), // Adjust the image path
                 height: 130,
                 width: 170,
                 fit: BoxFit.cover,
