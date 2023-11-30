@@ -11,6 +11,7 @@ class ToDoTile extends StatelessWidget {
   final String taskName;
   final bool taskCompleted;
   Function(bool?)? onChanged;
+  List? list_finder;
 
   Function(BuildContext)? taskCompleteFunction;
 
@@ -21,6 +22,10 @@ class ToDoTile extends StatelessWidget {
     required this.onChanged,
     required this.taskCompleteFunction,
   });
+
+  void setList(List li) {
+    list_finder = li;
+  }
 
   @override
   Widget build(BuildContext context) {

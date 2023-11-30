@@ -202,6 +202,48 @@ class _MyTimerState extends State<PomoTasker>
         });
   }
 
+  int list_index = -1;
+
+  void updateTask(List task, int index) {
+    list_index = index;
+    showDialog(
+        context: context,
+        builder: (context) {
+          _title_controller.text = task[0].toString();
+          _date_controller.text = task[2].toString();
+          _time_controller.text = task[3].toString();
+          _desc_controller.text = task[4].toString();
+          return DialogBox(
+            title_controller: _title_controller,
+            // month_controller: _month_controller,
+            // day_controller: _day_controller,
+            // year_controller: _year_controller,
+            // hour_controller: _hour_controller,
+            // min_controller: _min_controller,
+            // am_pm_controller: _am_pm_controller,
+            date_controller: _date_controller,
+            time_controller: _time_controller,
+            desc_controller: _desc_controller,
+            onSave: saveUpdateTask,
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        });
+  }
+
+  void saveUpdateTask() {
+    setState(() {
+      db.toDoList[list_index] = [
+        _title_controller.text.toString(),
+        false,
+        _date_controller.text.toString(),
+        _time_controller.text.toString(),
+        _desc_controller.text.toString()
+      ];
+    });
+    Navigator.of(context).pop();
+    db.updateDataBase();
+  }
+
 /**
  * When the user swipes left the user needs to press the check icon to confirm if
  * the task is complete. Upon pressing it will remove the task from the database
@@ -248,12 +290,14 @@ class _MyTimerState extends State<PomoTasker>
               shrinkWrap: true,
               itemCount: db.toDoList.length,
               itemBuilder: (context, index) {
-                return ToDoTile(
-                  taskName: db.toDoList[index][0],
-                  taskCompleted: db.toDoList[index][1],
-                  onChanged: (value) => checkBoxChanged(value, index),
-                  taskCompleteFunction: (context) => taskComplete(index),
-                );
+                return ElevatedButton(
+                    onPressed: () => updateTask(db.toDoList[index], index),
+                    child: ToDoTile(
+                      taskName: db.toDoList[index][0],
+                      taskCompleted: db.toDoList[index][1],
+                      onChanged: (value) => checkBoxChanged(value, index),
+                      taskCompleteFunction: (context) => taskComplete(index),
+                    ));
               },
             ),
             /**

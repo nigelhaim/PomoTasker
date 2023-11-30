@@ -16,7 +16,6 @@ class DialogBox extends StatelessWidget {
   final desc_controller;
   final VoidCallback onSave;
   final VoidCallback onCancel;
-
   DialogBox({
     Key? key,
     required this.title_controller,
