@@ -29,69 +29,157 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // Title TextField
-            Text("Task Name"),
-            TextField(
+      scrollable: true,
+      actionsAlignment: MainAxisAlignment.center,
+      backgroundColor: Colors.redAccent,
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // Title TextField
+          Text(
+            "Task Name",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.white,
+            ),
+            child: TextField(
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
               controller: title_controller,
               decoration: InputDecoration(
-                hintText: "Task Name",
+                border: InputBorder.none,
+                hintText: "Insert Task Name Here",
               ),
             ),
-
-            // Date TextField
-            Text("Date"),
-            TextField(
+          ),
+          // Date TextField
+          Text(
+            "Date",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.white,
+            ),
+            child: TextField(
               controller: date_controller,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
               decoration: InputDecoration(
-                labelText: 'Date',
-                filled: true,
-                prefixIcon: Icon(Icons.calendar_today),
+                filled: false,
               ),
               readOnly: true,
               onTap: () {
                 _selectDate(context);
               },
             ),
+          ),
 
-            // Time TextField
-            Text("Time"),
-            TextField(
+          // Time TextField
+          Text(
+            "Time",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.white,
+            ),
+            child: TextField(
               controller: time_controller,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
               decoration: InputDecoration(
-                labelText: 'Time',
-                filled: true,
-                prefixIcon: Icon(Icons.alarm),
+                filled: false,
               ),
               readOnly: true,
               onTap: () {
                 _selectTime(context);
               },
             ),
-
-            // Description TextField
-            Text("Task Description"),
-            TextField(
+          ),
+          // Description TextField
+          Text(
+            "Task Description",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.white,
+            ),
+            child: TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
               controller: desc_controller,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 50),
+                contentPadding: EdgeInsets.all(1d0),
                 hintText: "Insert your task description here",
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       actions: <Widget>[
-        TextButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(0, 22, 71, 62),
+            disabledBackgroundColor: Colors.white,
+          ),
           onPressed: onCancel,
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        TextButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(0, 22, 71, 62),
+            disabledBackgroundColor: Colors.white,
+          ),
           onPressed: onSave,
-          child: const Text('OK'),
+          child: const Text(
+            'OK',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );
