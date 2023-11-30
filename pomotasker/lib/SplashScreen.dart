@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -31,11 +32,11 @@ class SplashScreen extends StatelessWidget {
                 "PomoTasker",
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.clip,
-                style: TextStyle(
+                style: GoogleFonts.ubuntuMono(
                   fontWeight: FontWeight.w800,
                   fontStyle: FontStyle.normal,
                   fontSize: 30,
-                  color: Color(0xffca615a),
+                  color: Color(0xffca615a), // Adjust the color as needed
                 ),
               ),
             ),

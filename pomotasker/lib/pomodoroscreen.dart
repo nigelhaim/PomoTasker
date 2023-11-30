@@ -13,6 +13,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '/data/database.dart';
 
 import 'package:pomotasker/util/task_Button.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 
@@ -228,22 +229,23 @@ class _MyTimerState extends State<PomoTasker>
     db.updateDataBase();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color(0xfff0f4f4),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            // Logo & app name
-            Padding(
-                padding: EdgeInsets.fromLTRB(0, 35, 0, 0),
+        backgroundColor: Color(0xFFF0F4F4),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Color(0xFFF0F4F4),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              // Logo & app name
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,59 +265,80 @@ class _MyTimerState extends State<PomoTasker>
                         "PomoTasker",
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
-                        style: TextStyle(
+                        style: GoogleFonts.ubuntuMono(
                           fontWeight: FontWeight.w700,
                           fontStyle: FontStyle.normal,
                           fontSize: 14,
-                          color: Color(0xffc65f58),
+                          color: Color(0xFFC65F58),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
+            ],
+          ),
+        ),
 
-
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
             // Timer portion
             Expanded(
               flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    // "timer text
-                    Expanded(
-                      flex: 3,
-                      child: BuildCustomTimer(_controller),
-                    ),
-                  ],
-                ),
-
-            ),
-
-            // ListView for rendering tasks
-            Expanded(
-              flex: 2,
-
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: db.toDoList.length,
-                itemBuilder: (context, index) {
-                  return ToDoTile(
-                    taskName: db.toDoList[index][0],
-                    taskCompleted: db.toDoList[index][1],
-                    onChanged: (value) => checkBoxChanged(value, index),
-                    taskCompleteFunction: (context) => taskComplete(index),
-                  );
-                },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  // "timer text
+                  Expanded(
+                    flex: 3,
+                    child: BuildCustomTimer(_controller),
+                  ),
+                ],
               ),
             ),
-            // Button that generates the dialogue box
-            FloatingActionButton(
-              onPressed: createNewTask,
-              child: Icon(Icons.add),
+
+            // Centered ListView for rendering tasks
+            Expanded(
+              flex: 2,
+              child: Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(25, 10, 10, 10),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: db.toDoList.length,
+                    itemBuilder: (context, index) {
+                      return ToDoTile(
+                        taskName: db.toDoList[index][0],
+                        taskCompleted: db.toDoList[index][1],
+                        onChanged: (value) => checkBoxChanged(value, index),
+                        taskCompleteFunction: (context) => taskComplete(index),
+                      );
+                    },
+                  ),
+                ),
+              ),
             ),
+
+            // Button that generates the dialogue box
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: FloatingActionButton(
+                onPressed: createNewTask,
+                backgroundColor: Color(0xFFF2756D), // Set color to F2756D
+                child: Icon(
+                  Icons.add,
+                  size: 35, // Increase size by 2
+                  color: Colors.white, // Set color to white
+                ),
+              ),
+            ),
+
           ],
         ),
       ),
@@ -323,10 +346,7 @@ class _MyTimerState extends State<PomoTasker>
   }
 }
 
-
-
-
-  class timerButtons extends StatelessWidget {
+class timerButtons extends StatelessWidget {
   TextEditingController _workMinutes = TextEditingController();
   TextEditingController _workSeconds = TextEditingController();
   TextEditingController _shortMinutes = TextEditingController();
@@ -342,8 +362,6 @@ class _MyTimerState extends State<PomoTasker>
   TimerData tb = TimerData();
   timerButtons({super.key});
   @override
-
-  //Edit Timer Modal
   Widget build(BuildContext context) {
     return FilledButton(
       style: TextButton.styleFrom(
@@ -354,12 +372,13 @@ class _MyTimerState extends State<PomoTasker>
         context: context,
         builder: (BuildContext context) => AlertDialog(
           actionsAlignment: MainAxisAlignment.center,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
           title: const Center(
               child: Text(
-            'Edit Timer',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
+                'Edit Timer',
+                style: TextStyle(fontWeight: FontWeight.w900),
+              )
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -371,46 +390,49 @@ class _MyTimerState extends State<PomoTasker>
                   fontSize: 24,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _workMinutes,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: workTime.inMinutes.toString(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(right: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _workMinutes,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: workTime.inMinutes.toString(),
+                          ),
                         ),
                       ),
-                    ),
-                    Text(":",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20)),
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _workSeconds,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '00',
+                      Text(":",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _workSeconds,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: '00',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const Text(
@@ -420,48 +442,54 @@ class _MyTimerState extends State<PomoTasker>
                   fontSize: 24,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _shortMinutes,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: shortTime.inMinutes.toString(),
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(right: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _shortMinutes,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: shortTime.inMinutes.toString(),
+                          ),
                         ),
                       ),
-                    ),
-                    Text(":",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20)),
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _shortSeconds,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '00',
+                      Text(":",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _shortSeconds,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: '00',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+
+
               const Text(
                 "Long Break",
                 style: TextStyle(
@@ -469,6 +497,7 @@ class _MyTimerState extends State<PomoTasker>
                   fontSize: 24,
                 ),
               ),
+
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
@@ -494,7 +523,7 @@ class _MyTimerState extends State<PomoTasker>
                     Text(
                       ":",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     Container(
                       width: 90,
@@ -515,6 +544,7 @@ class _MyTimerState extends State<PomoTasker>
               ),
             ],
           ),
+
           actions: <Widget>[
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -555,10 +585,22 @@ class _MyTimerState extends State<PomoTasker>
           ],
         ),
       ),
-      child: const Text('Edit Timer'),
+      child: const Text(
+        'Edit Timer',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontFamily: 'UbuntuMono',
+          fontSize: 16, // Set the font size
+          color: Color(0xFF363636),
+        ),
+      ),
+
     );
   }
 }
+
+
+
 
 /**
  * This handles the working and break times of the timer 
@@ -621,9 +663,24 @@ Column BuildCustomTimer(CustomTimerController _controller) {
         builder: (state, remaining) {
           return Column(
             children: [
-              Text(timerType),
-              Text("${remaining.minutes}:${remaining.seconds}",
-                  style: const TextStyle(fontSize: 90)),
+            Text(
+            timerType,
+            style: GoogleFonts.ubuntu(
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Colors.black,
+              ),
+            ),
+              Text(
+                "${remaining.minutes}:${remaining.seconds}",
+                style: GoogleFonts.ubuntuMono(
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 95,
+                  color: Color(0xFF363636),  // Change the color as needed
+                ),
+              ),
+
             ],
           );
         },
@@ -779,7 +836,14 @@ Expanded createButton(String button, CustomTimerController _controller) {
           timerButtons();
         }
       },
-      child: Text(button),
+      child: Text(
+        button,
+        style: GoogleFonts.ubuntu(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          color: Color(0xFF363636),
+        ),
+      ),
     ),
   );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /**
  * This is handles the tile of the to-do list in the main screen 
@@ -22,10 +23,11 @@ class ToDoTile extends StatelessWidget {
     required this.taskCompleteFunction,
   });
 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4),
         //This handles the slidable part of the program
         child: Slidable(
           endActionPane: ActionPane(
@@ -38,17 +40,7 @@ class ToDoTile extends StatelessWidget {
               )
             ],
           ),
-          child: /*Container(
-            padding: EdgeInsets.all(27),
-            child: Row(children: [
-              Text(taskName),
-            ]),
-            decoration: BoxDecoration(
-                color: Colors.redAccent,
-                borderRadius: BorderRadius.circular(12)),
-          ), */
-
-
+          child:
           //container for task
           Container(
             margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -95,11 +87,10 @@ class ToDoTile extends StatelessWidget {
                           child: Text(taskName,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.clip,
-                            style: TextStyle(
+                            style: GoogleFonts.ubuntuMono(
                               fontWeight: FontWeight.w800,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 20,
-                              color: Color(0xffffffff),
+                              fontSize: 22,
+                              color: Color(0xffffffff), // Set the color to white
                             ),
                           ),
                         ),

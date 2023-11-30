@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class GetStarted extends StatelessWidget {
@@ -41,24 +42,26 @@ class GetStarted extends StatelessWidget {
                       "Welcome to PomoTasker",
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.clip,
-                      style: TextStyle(
+                      style: GoogleFonts.ubuntuMono(
                         fontWeight: FontWeight.w600,
                         fontStyle: FontStyle.normal,
                         fontSize: 18,
-                        color: Color(0xff000000),
+                        color: Color(0xff000000), // Adjust the color as needed
                       ),
                     ),
+
                     Text(
                       "Your Ultimate Productivity Companion!",
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.clip,
-                      style: TextStyle(
+                      style: GoogleFonts.ubuntuMono(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.italic,
                         fontSize: 9,
-                        color: Color(0xff000000),
+                        color: Color(0xff000000), // Adjust the color as needed
                       ),
                     ),
+
                   ],
                 ),
               ),
@@ -97,11 +100,11 @@ class GetStarted extends StatelessWidget {
                         "Boost your productivity with our sleek Pomodoro timer! Customize your work sessions to fit your unique workflow. Whether you prefer shorter bursts of focus or longer deep work sessions, PomoTasker adapts to your needs.",
                         textAlign: TextAlign.justify,
                         overflow: TextOverflow.clip,
-                        style: TextStyle(
+                        style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                           fontSize: 12,
-                          color: Color(0xff000000),
+                          color: Color(0xff000000), // Adjust the color as needed
                         ),
                       ),
                     ),
@@ -118,11 +121,11 @@ class GetStarted extends StatelessWidget {
                         "Effortlessly manage your tasks with our intuitive to-do list feature. Add, and organize your tasks seamlessly. PomoTasker helps you stay on top of your priorities.",
                         textAlign: TextAlign.justify,
                         overflow: TextOverflow.clip,
-                        style: TextStyle(
+                        style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                           fontSize: 12,
-                          color: Color(0xff000000),
+                          color: Color(0xff000000), // Adjust the color as needed
                         ),
                       ),
                     ),

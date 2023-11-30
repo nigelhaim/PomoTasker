@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pomotasker/util/box_button.dart';
 
 /**
- * This is where the dialogue box happens where the user inputs 
- * the task details 
- * TODO: IMPROVE THE DIALOGUE BOX FOR THE OTHER TASK DETAILS 
- * TODO: IMPLEMENT DATE FORM 
- * You can refer the code to improve the form made by Angelo 
+ * This is where the dialogue box happens where the user inputs
+ * the task details
+ * TODO: IMPROVE THE DIALOGUE BOX FOR THE OTHER TASK DETAILS
+ * TODO: IMPLEMENT DATE FORM
+ * You can refer the code to improve the form made by Angelo
  */
 
 class DialogBox extends StatelessWidget {
@@ -16,7 +16,6 @@ class DialogBox extends StatelessWidget {
   final desc_controller;
   final VoidCallback onSave;
   final VoidCallback onCancel;
-
   DialogBox({
     Key? key,
     required this.title_controller,
@@ -30,69 +29,169 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // Title TextField
-            Text("Task Name"),
-            TextField(
-              controller: title_controller,
-              decoration: InputDecoration(
-                hintText: "Task Name",
+      scrollable: true,
+      actionsAlignment: MainAxisAlignment.center,
+      backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // Title TextField
+          Text(
+            "Task Name",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+              ),
+              child: TextField(
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                controller: title_controller,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Insert Task Name Here",
+                ),
               ),
             ),
+          ),
+          // Date TextField
+          Text(
+            "Date",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+              ),
+              child: TextField(
+                controller: date_controller,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                decoration: InputDecoration(
+                  filled: false,
+                ),
+                readOnly: true,
+                onTap: () {
+                  _selectDate(context);
+                },
+              ),
+            ),
+          ),
 
-            // Date TextField
-            Text("Date"),
-            TextField(
-              controller: date_controller,
-              decoration: InputDecoration(
-                labelText: 'Date',
-                filled: true,
-                prefixIcon: Icon(Icons.calendar_today),
-              ),
-              readOnly: true,
-              onTap: () {
-                _selectDate(context);
-              },
+          // Time TextField
+          Text(
+            "Time",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-
-            // Time TextField
-            Text("Time"),
-            TextField(
-              controller: time_controller,
-              decoration: InputDecoration(
-                labelText: 'Time',
-                filled: true,
-                prefixIcon: Icon(Icons.alarm),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
               ),
-              readOnly: true,
-              onTap: () {
-                _selectTime(context);
-              },
-            ),
-
-            // Description TextField
-            Text("Task Description"),
-            TextField(
-              controller: desc_controller,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 50),
-                hintText: "Insert your task description here",
+              child: TextField(
+                controller: time_controller,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                decoration: InputDecoration(
+                  filled: false,
+                ),
+                readOnly: true,
+                onTap: () {
+                  _selectTime(context);
+                },
               ),
             ),
-          ],
-        ),
+          ),
+          // Description TextField
+          Text(
+            "Task Description",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+              ),
+              child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                controller: desc_controller,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10),
+                  hintText: "Insert your task description here",
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       actions: <Widget>[
-        TextButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(0, 22, 71, 62),
+            disabledBackgroundColor: Colors.white,
+          ),
           onPressed: onCancel,
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        TextButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(0, 22, 71, 62),
+            disabledBackgroundColor: Colors.white,
+          ),
           onPressed: onSave,
-          child: const Text('OK'),
+          child: const Text(
+            'OK',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );
