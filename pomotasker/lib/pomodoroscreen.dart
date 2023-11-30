@@ -369,7 +369,11 @@ class _MyTimerState extends State<PomoTasker>
                                       checkBoxChanged(value, index),
                                   taskCompleteFunction: (context) =>
                                       taskComplete(index),
-                                ));
+                                ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFFF0F4F4), // Set the background color to white
+                              ),
+                            );
                           },
                         ),
                       ),
