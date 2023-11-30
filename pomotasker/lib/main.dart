@@ -5,7 +5,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:pomotasker/pomodoroscreen.dart ';
+import 'package:pomotasker/pomodoroscreen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {

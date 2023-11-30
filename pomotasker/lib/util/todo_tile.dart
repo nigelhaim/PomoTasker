@@ -38,14 +38,78 @@ class ToDoTile extends StatelessWidget {
               )
             ],
           ),
-          child: Container(
-            padding: EdgeInsets.all(24),
+          child: /*Container(
+            padding: EdgeInsets.all(27),
             child: Row(children: [
               Text(taskName),
             ]),
             decoration: BoxDecoration(
                 color: Colors.redAccent,
                 borderRadius: BorderRadius.circular(12)),
+          ), */
+
+
+          //container for task
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+            padding: EdgeInsets.all(0),
+            width: 300,
+            height: 70,
+            decoration: BoxDecoration(
+              color: Color(0xffc55e57),
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 60,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Color(0xfff2766e),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Color(0xff212435),
+                    size: 24,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,                    
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(taskName,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 20,
+                              color: Color(0xffffffff),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
           ),
         ));
   }

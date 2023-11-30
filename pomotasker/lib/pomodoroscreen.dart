@@ -14,15 +14,21 @@ import '/data/database.dart';
 
 import 'package:pomotasker/util/task_Button.dart';
 
+
+
 //Runs the app
 void main() => runApp(PomoTasker());
 
 //Extends the StatefulWidget
+
 class PomoTasker extends StatefulWidget {
 //Initiates the state of the timer
   @override
   _MyTimerState createState() => _MyTimerState();
 }
+
+
+
 
 /**
  * The program flows is it combines both timer and to-do feature in one class
@@ -76,19 +82,26 @@ Duration workTime = getWorkTime();
 Duration shortTime = getShortTime();
 Duration longTime = getLongTime();
 
+
+
+
+
 class _MyTimerState extends State<PomoTasker>
     with SingleTickerProviderStateMixin {
   int type = 0;
   late CustomTimerController _controller = CustomTimerController(
-      /**
-     * Sets the controller of the timer 
+    /**
+     * Sets the controller of the timer
      */
 
       vsync: this,
-      begin: workTime, //Beginning of the timer
-      end: Duration(minutes: 00, seconds: 00), //Expected end of the timer
+      begin: workTime,
+      //Beginning of the timer
+      end: Duration(minutes: 00, seconds: 00),
+      //Expected end of the timer
       initialState: CustomTimerState
-          .reset, //Initial state is reset which is goes back to the begin time
+          .reset,
+      //Initial state is reset which is goes back to the begin time
       interval: CustomTimerInterval
           .milliseconds); //Changes the timer time by milliseconds
 
@@ -106,16 +119,16 @@ class _MyTimerState extends State<PomoTasker>
   final _taskBox = Hive.box('pomobox');
   ToDoDatabase db = ToDoDatabase();
 
-/**
- * This function acts as the loading of tasks in the to-do widget 
- */
+  /**
+   * This function acts as the loading of tasks in the to-do widget
+   */
   @override
   void initState() {
     // if this is the 1st time ever opening the app, then create default data
     /**
      * You can find references /data/database.dart
-     * It will load Make tutorial and do Exercises task 
-     * when the user opens the app for the first time 
+     * It will load Make tutorial and do Exercises task
+     * when the user opens the app for the first time
      */
     if (_taskBox.get("TODOLIST") == null) {
       db.createInitialData();
@@ -135,6 +148,7 @@ class _MyTimerState extends State<PomoTasker>
    * This is the controller for the add task textbox
    */
   final _title_controller = TextEditingController();
+
   // final _month_controller = TextEditingController();
   // final _day_controller = TextEditingController();
   // final _year_controller = TextEditingController();
@@ -154,7 +168,7 @@ class _MyTimerState extends State<PomoTasker>
 
   //Save new task
   /**
-   * When the user press confirm button on the createNewTask it closes the dialogue 
+   * When the user press confirm button on the createNewTask it closes the dialogue
    * saves in the database and shows the new task on the screen
    */
   void saveNewTask() {
@@ -177,10 +191,10 @@ class _MyTimerState extends State<PomoTasker>
     db.updateDataBase();
   }
 
-/**
- * This creates a dialogueBox where prompts the user of the task details 
- * TODO: NEEDS TO ADD THE DEADLINE DATE FORM AND DESCRIPTION TEXTBOX
- */
+  /**
+   * This creates a dialogueBox where prompts the user of the task details
+   * TODO: NEEDS TO ADD THE DEADLINE DATE FORM AND DESCRIPTION TEXTBOX
+   */
   void createNewTask() {
     showDialog(
         context: context,
@@ -202,11 +216,11 @@ class _MyTimerState extends State<PomoTasker>
         });
   }
 
-/**
- * When the user swipes left the user needs to press the check icon to confirm if
- * the task is complete. Upon pressing it will remove the task from the database
- * This could also acts as the delete button.....
- */
+  /**
+   * When the user swipes left the user needs to press the check icon to confirm if
+   * the task is complete. Upon pressing it will remove the task from the database
+   * This could also acts as the delete button.....
+   */
   void taskComplete(int index) {
     setState(() {
       db.toDoList.removeAt(index);
@@ -214,57 +228,94 @@ class _MyTimerState extends State<PomoTasker>
     db.updateDataBase();
   }
 
+
+
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //Hugs the whole components of the app
       home: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor:
-              Colors.greenAccent, //To be changed in the preffered theme color
-          title: Text(
-            "PomoTasker",
-            style: textStyle(24, Colors.redAccent,
-                FontWeight.w700), //Refer on the utils.dart file
-          ),
-        ),
+        backgroundColor: Color(0xfff0f4f4),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            /**
-             * BuildCustomTimer is the method that creates the whole 
-             * timer feature
-             */
-            BuildCustomTimer(_controller),
-            /**
-             * ListView is handles the rendering of tasks got from the databases
-             * It reliles on the ToDoTile class on the 
-             * todo_tile.dart file 
-             * basically it also acts as the for loop of the tasks 
-             */
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: db.toDoList.length,
-              itemBuilder: (context, index) {
-                return ToDoTile(
-                  taskName: db.toDoList[index][0],
-                  taskCompleted: db.toDoList[index][1],
-                  onChanged: (value) => checkBoxChanged(value, index),
-                  taskCompleteFunction: (context) => taskComplete(index),
-                );
-              },
+            // Logo & app name
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 35, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    // Logo
+                    Image(
+                      image: AssetImage("assets/logo.png"),
+                      height: 40,
+                      width: 60,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      // App name
+                      child: Text(
+                        "PomoTasker",
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14,
+                          color: Color(0xffc65f58),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+
+            // Timer portion
+            Expanded(
+              flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    // "timer text
+                    Expanded(
+                      flex: 3,
+                      child: BuildCustomTimer(_controller),
+                    ),
+                  ],
+                ),
+
             ),
-            /**
-             * This is the button that generates the dialogue box
-             */
+
+            // ListView for rendering tasks
+            Expanded(
+              flex: 2,
+
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: db.toDoList.length,
+                itemBuilder: (context, index) {
+                  return ToDoTile(
+                    taskName: db.toDoList[index][0],
+                    taskCompleted: db.toDoList[index][1],
+                    onChanged: (value) => checkBoxChanged(value, index),
+                    taskCompleteFunction: (context) => taskComplete(index),
+                  );
+                },
+              ),
+            ),
+            // Button that generates the dialogue box
             FloatingActionButton(
-                //TODO COMPLETE ADD TASK
-                // onPressed: createNewTask, child: taskButton()
-                onPressed: createNewTask,
-                child: Icon(Icons.add)), //Nigel's button
-            // taskButton(), //Angelo's button
+              onPressed: createNewTask,
+              child: Icon(Icons.add),
+            ),
           ],
         ),
       ),
@@ -272,7 +323,10 @@ class _MyTimerState extends State<PomoTasker>
   }
 }
 
-class timerButtons extends StatelessWidget {
+
+
+
+  class timerButtons extends StatelessWidget {
   TextEditingController _workMinutes = TextEditingController();
   TextEditingController _workSeconds = TextEditingController();
   TextEditingController _shortMinutes = TextEditingController();
@@ -288,11 +342,13 @@ class timerButtons extends StatelessWidget {
   TimerData tb = TimerData();
   timerButtons({super.key});
   @override
+
+  //Edit Timer Modal
   Widget build(BuildContext context) {
     return FilledButton(
       style: TextButton.styleFrom(
-        backgroundColor: Colors.redAccent,
-        foregroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+        foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
       ),
       onPressed: () => showDialog<String>(
         context: context,
@@ -509,12 +565,13 @@ class timerButtons extends StatelessWidget {
  * a small error here is the button double inputs for some reason
  * therefore I implemented pressedOnce boolean to prevent the double input
  */
-Expanded BuildCustomTimer(CustomTimerController _controller) {
+
+Column BuildCustomTimer(CustomTimerController _controller) {
   bool working = true;
   bool shortBreak = false;
   bool longBreak = false;
   bool pressedOnce = false;
-  String timerType = "Working";
+  String timerType = "Time to Work!";
   _controller.state.addListener(() {
     if (_controller.state.value == CustomTimerState.finished) {
       // print("The " + _controller.state.value.toString());
@@ -557,31 +614,139 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
    * This returns the timer itself which is also has the buttons 
    * and the name of the mode of timer
    */
-
-  return Expanded(
-    child: Column(children: <Widget>[
+  return Column(
+    children: [
       CustomTimer(
-          controller: _controller,
-          builder: (state, remaining) {
-            return Column(
-              children: [
-                Text(timerType),
-                // Text("${state.name}", style: TextStyle(fontSize: 24)),
-                Text("${remaining.minutes}:${remaining.seconds}",
-                    style: const TextStyle(fontSize: 24)),
-              ],
-            );
-          }),
-      const SizedBox(height: 24.0),
-      Row(
-        children: [
-          createButton("Start", _controller),
-          createButton("Reset", _controller),
-          createButton("Stop", _controller),
-          timerButtons(),
-        ],
-      )
-    ]),
+        controller: _controller,
+        builder: (state, remaining) {
+          return Column(
+            children: [
+              Text(timerType),
+              Text("${remaining.minutes}:${remaining.seconds}",
+                  style: const TextStyle(fontSize: 90)),
+            ],
+          );
+        },
+      ),
+
+      //buttons container
+      Expanded(
+        flex: 1,
+
+        //container that contains all the 4 text buttons
+        child: Container(
+          margin: EdgeInsets.all(0),
+          padding: EdgeInsets.all(0),
+          width: 270,
+          height: 85,
+          decoration: BoxDecoration(
+            color: Color(0x00000000),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.zero,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                flex: 1,
+
+                //container that contains the 2 top buttons (start/pause, stop)
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 270,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Color(0x00000000),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+
+                      //start/pause text button
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 5),
+                          child: createButton("Start", _controller),
+                        ),
+                      ),
+
+                      //stop text button
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 5),
+                          child: createButton("Stop", _controller),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 5.0),
+
+              Expanded(
+                flex: 1,
+
+                //container that contains the 2 bottom buttons (edit, reset)
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 300,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Color(0x00000000),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+
+                      //edit text button
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 5),
+                          child: timerButtons(),
+                        ),
+                      ),
+
+                      //reset text button
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 5),
+                          child: createButton("Reset", _controller),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+
+    ],
   );
 }
 
@@ -593,8 +758,8 @@ Expanded createButton(String button, CustomTimerController _controller) {
   return Expanded(
     child: FilledButton(
       style: TextButton.styleFrom(
-        backgroundColor: Colors.redAccent,
-        foregroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+        foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
       ),
       onPressed: () {
         if (button == "Start") {
