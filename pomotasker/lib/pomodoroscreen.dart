@@ -350,31 +350,37 @@ class _MyTimerState extends State<PomoTasker>
                          * basically it also acts as the for loop of the tasks 
                          */
                   Expanded(
-                    // flex: 2,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: db.toDoList.length,
-                          itemBuilder: (context, index) {
-                            return ElevatedButton(
-                                onPressed: () =>
-                                    updateTask(db.toDoList[index], index),
-                                child: ToDoTile(
-                                  taskName: db.toDoList[index][0],
-                                  taskCompleted: db.toDoList[index][1],
-                                  onChanged: (value) =>
-                                      checkBoxChanged(value, index),
-                                  taskCompleteFunction: (context) =>
-                                      taskComplete(index),
+                    flex: 2,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: db.toDoList.length,
+                            itemBuilder: (context, index) {
+                              return ElevatedButton(
+                                  onPressed: () =>
+                                      updateTask(db.toDoList[index], index),
+                                  child: ToDoTile(
+
+                                    taskName: db.toDoList[index][0],
+                                    taskCompleted: db.toDoList[index][1],
+                                    onChanged: (value) =>
+                                        checkBoxChanged(value, index),
+                                    taskCompleteFunction: (context) =>
+                                        taskComplete(index),
+                                  ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xFFF0F4F4),
+                                  padding: EdgeInsets.all(0), // Remove default padding
+                                  elevation: 0, // Remove the shadow// Set the background color to white
                                 ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(0xFFF0F4F4), // Set the background color to white
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -386,7 +392,7 @@ class _MyTimerState extends State<PomoTasker>
 
             // Button that generates the dialogue box
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 15),
               child: FloatingActionButton(
                 onPressed: createNewTask,
                 backgroundColor: Color(0xFFF2756D), // Set color to F2756D
@@ -796,7 +802,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                   ),
                 ),
               ),
-              const SizedBox(height: 5.0),
+
               Expanded(
                 // flex: 1,
 

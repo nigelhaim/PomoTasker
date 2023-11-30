@@ -3,7 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /**
- * This is handles the tile of the to-do list in the main screen 
+ * This is handles the tile of the to-do list in the main screen
  * it uses a flutter_slidable package
  * TODO: IMPROVE THE SLIDING PART
  * TODO: MAKE A BUTTON THAT OPENS THE FORM FOR THE EDIT
