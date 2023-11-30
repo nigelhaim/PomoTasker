@@ -15,8 +15,6 @@ import '/data/database.dart';
 import 'package:pomotasker/util/task_Button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 //Runs the app
 void main() => runApp(PomoTasker());
 
@@ -27,9 +25,6 @@ class PomoTasker extends StatefulWidget {
   @override
   _MyTimerState createState() => _MyTimerState();
 }
-
-
-
 
 /**
  * The program flows is it combines both timer and to-do feature in one class
@@ -83,15 +78,11 @@ Duration workTime = getWorkTime();
 Duration shortTime = getShortTime();
 Duration longTime = getLongTime();
 
-
-
-
-
 class _MyTimerState extends State<PomoTasker>
     with SingleTickerProviderStateMixin {
   int type = 0;
   late CustomTimerController _controller = CustomTimerController(
-    /**
+      /**
      * Sets the controller of the timer
      */
 
@@ -100,8 +91,7 @@ class _MyTimerState extends State<PomoTasker>
       //Beginning of the timer
       end: Duration(minutes: 00, seconds: 00),
       //Expected end of the timer
-      initialState: CustomTimerState
-          .reset,
+      initialState: CustomTimerState.reset,
       //Initial state is reset which is goes back to the begin time
       interval: CustomTimerInterval
           .milliseconds); //Changes the timer time by milliseconds
@@ -279,7 +269,6 @@ class _MyTimerState extends State<PomoTasker>
             ],
           ),
         ),
-
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -308,7 +297,7 @@ class _MyTimerState extends State<PomoTasker>
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(25, 10, 10, 10),
+                  padding: EdgeInsets.symmetric(horizontal: 50),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: db.toDoList.length,
@@ -338,7 +327,6 @@ class _MyTimerState extends State<PomoTasker>
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -375,10 +363,9 @@ class timerButtons extends StatelessWidget {
           backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
           title: const Center(
               child: Text(
-                'Edit Timer',
-                style: TextStyle(fontWeight: FontWeight.w900),
-              )
-          ),
+            'Edit Timer',
+            style: TextStyle(fontWeight: FontWeight.w900),
+          )),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -442,7 +429,6 @@ class timerButtons extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: Container(
@@ -488,8 +474,6 @@ class timerButtons extends StatelessWidget {
                   ),
                 ),
               ),
-
-
               const Text(
                 "Long Break",
                 style: TextStyle(
@@ -497,7 +481,6 @@ class timerButtons extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
@@ -523,7 +506,7 @@ class timerButtons extends StatelessWidget {
                     Text(
                       ":",
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     Container(
                       width: 90,
@@ -544,7 +527,6 @@ class timerButtons extends StatelessWidget {
               ),
             ],
           ),
-
           actions: <Widget>[
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -594,13 +576,9 @@ class timerButtons extends StatelessWidget {
           color: Color(0xFF363636),
         ),
       ),
-
     );
   }
 }
-
-
-
 
 /**
  * This handles the working and break times of the timer 
@@ -663,24 +641,23 @@ Column BuildCustomTimer(CustomTimerController _controller) {
         builder: (state, remaining) {
           return Column(
             children: [
-            Text(
-            timerType,
-            style: GoogleFonts.ubuntu(
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Colors.black,
+              Text(
+                timerType,
+                style: GoogleFonts.ubuntu(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
               ),
-            ),
               Text(
                 "${remaining.minutes}:${remaining.seconds}",
                 style: GoogleFonts.ubuntuMono(
                   fontWeight: FontWeight.w700,
                   fontStyle: FontStyle.normal,
                   fontSize: 95,
-                  color: Color(0xFF363636),  // Change the color as needed
+                  color: Color(0xFF363636), // Change the color as needed
                 ),
               ),
-
             ],
           );
         },
@@ -726,13 +703,12 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-
                       //start/pause text button
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 5),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                           child: createButton("Start", _controller),
                         ),
                       ),
@@ -741,8 +717,8 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 5),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                           child: createButton("Stop", _controller),
                         ),
                       ),
@@ -750,9 +726,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                   ),
                 ),
               ),
-
               const SizedBox(height: 5.0),
-
               Expanded(
                 flex: 1,
 
@@ -773,13 +747,12 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-
                       //edit text button
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 5),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                           child: timerButtons(),
                         ),
                       ),
@@ -788,8 +761,8 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 5),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                           child: createButton("Reset", _controller),
                         ),
                       ),
@@ -801,8 +774,6 @@ Column BuildCustomTimer(CustomTimerController _controller) {
           ),
         ),
       ),
-
-
     ],
   );
 }
@@ -840,7 +811,7 @@ Expanded createButton(String button, CustomTimerController _controller) {
         button,
         style: GoogleFonts.ubuntu(
           fontWeight: FontWeight.bold,
-          fontSize: 14,
+          fontSize: 16,
           color: Color(0xFF363636),
         ),
       ),
