@@ -12,6 +12,7 @@ class ToDoTile extends StatelessWidget {
   final String taskName;
   final bool taskCompleted;
   Function(bool?)? onChanged;
+  List? list_finder;
 
   Function(BuildContext)? taskCompleteFunction;
 
@@ -22,7 +23,6 @@ class ToDoTile extends StatelessWidget {
     required this.onChanged,
     required this.taskCompleteFunction,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +41,8 @@ class ToDoTile extends StatelessWidget {
             ],
           ),
           child:
-          //container for task
-          Container(
+              //container for task
+              Container(
             margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
             padding: EdgeInsets.all(0),
             width: 300,
@@ -80,17 +80,19 @@ class ToDoTile extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,                    
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text(taskName,
+                          child: Text(
+                            taskName,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.clip,
                             style: GoogleFonts.ubuntuMono(
                               fontWeight: FontWeight.w800,
                               fontSize: 22,
-                              color: Color(0xffffffff), // Set the color to white
+                              color:
+                                  Color(0xffffffff), // Set the color to white
                             ),
                           ),
                         ),
@@ -98,7 +100,6 @@ class ToDoTile extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),

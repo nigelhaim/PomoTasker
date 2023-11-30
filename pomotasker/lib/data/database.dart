@@ -16,23 +16,15 @@ class ToDoDatabase {
       [
         "Make Tutorial",
         false,
-        11,
-        22,
-        2023,
-        7,
-        00,
-        "PM",
+        "2023-12-20",
+        "23:00",
         "Make a tutorial for flutter"
       ],
       [
         "Review Interpolation",
         false,
-        11,
-        22,
-        2023,
-        10,
-        00,
-        "PM",
+        "2023-12-20",
+        "23:00",
         "Make a tutorial for flutter"
       ],
     ];

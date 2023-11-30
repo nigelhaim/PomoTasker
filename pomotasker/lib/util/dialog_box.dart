@@ -43,6 +43,7 @@ class DialogBox extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+
           Padding(
             padding: EdgeInsets.fromLTRB(0, 2, 0, 10),
             child: Container(

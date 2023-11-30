@@ -187,6 +187,10 @@ class _MyTimerState extends State<PomoTasker>
    * TODO: NEEDS TO ADD THE DEADLINE DATE FORM AND DESCRIPTION TEXTBOX
    */
   void createNewTask() {
+    _title_controller.text = "";
+    _date_controller.text = "";
+    _time_controller.text = "";
+    _desc_controller.text = "";
     showDialog(
         context: context,
         builder: (context) {
@@ -207,11 +211,57 @@ class _MyTimerState extends State<PomoTasker>
         });
   }
 
-  /**
-   * When the user swipes left the user needs to press the check icon to confirm if
-   * the task is complete. Upon pressing it will remove the task from the database
-   * This could also acts as the delete button.....
-   */
+  int list_index = -1;
+
+  void updateTask(List task, int index) {
+    list_index = index;
+    showDialog(
+        context: context,
+        builder: (context) {
+          _title_controller.text = task[0].toString();
+          _date_controller.text = task[2].toString();
+          _time_controller.text = task[3].toString();
+          _desc_controller.text = task[4].toString();
+          return DialogBox(
+            title_controller: _title_controller,
+            // month_controller: _month_controller,
+            // day_controller: _day_controller,
+            // year_controller: _year_controller,
+            // hour_controller: _hour_controller,
+            // min_controller: _min_controller,
+            // am_pm_controller: _am_pm_controller,
+            date_controller: _date_controller,
+            time_controller: _time_controller,
+            desc_controller: _desc_controller,
+            onSave: saveUpdateTask,
+            onCancel: () => Navigator.of(context).pop(),
+          );
+        });
+  }
+
+  void saveUpdateTask() {
+    setState(() {
+      db.toDoList[list_index] = [
+        _title_controller.text.toString(),
+        false,
+        _date_controller.text.toString(),
+        _time_controller.text.toString(),
+        _desc_controller.text.toString()
+      ];
+    });
+    _title_controller.text = "";
+    _date_controller.text = "";
+    _time_controller.text = "";
+    _desc_controller.text = "";
+    Navigator.of(context).pop();
+    db.updateDataBase();
+  }
+
+/**
+ * When the user swipes left the user needs to press the check icon to confirm if
+ * the task is complete. Upon pressing it will remove the task from the database
+ * This could also acts as the delete button.....
+ */
   void taskComplete(int index) {
     setState(() {
       db.toDoList.removeAt(index);
@@ -273,10 +323,10 @@ class _MyTimerState extends State<PomoTasker>
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
-          children: [
+          children: <Widget>[
             // Timer portion
             Expanded(
-              flex: 1,
+              // flex: 1,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -284,35 +334,51 @@ class _MyTimerState extends State<PomoTasker>
                 children: [
                   // "timer text
                   Expanded(
-                    flex: 3,
-                    child: BuildCustomTimer(_controller),
+                    // flex: 3,
+                    child: Container(
+                      /**
+                         * BuildCustomTimer is the method that creates the whole 
+                         * timer feature
+                         */
+                      child: BuildCustomTimer(_controller),
+                    ),
+                  ),
+                  /**
+                         * ListView is handles the rendering of tasks got from the databases
+                         * It reliles on the ToDoTile class on the 
+                         * todo_tile.dart file 
+                         * basically it also acts as the for loop of the tasks 
+                         */
+                  Expanded(
+                    // flex: 2,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 50),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: db.toDoList.length,
+                          itemBuilder: (context, index) {
+                            return ElevatedButton(
+                                onPressed: () =>
+                                    updateTask(db.toDoList[index], index),
+                                child: ToDoTile(
+                                  taskName: db.toDoList[index][0],
+                                  taskCompleted: db.toDoList[index][1],
+                                  onChanged: (value) =>
+                                      checkBoxChanged(value, index),
+                                  taskCompleteFunction: (context) =>
+                                      taskComplete(index),
+                                ));
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-
             // Centered ListView for rendering tasks
-            Expanded(
-              flex: 2,
-              child: Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: db.toDoList.length,
-                    itemBuilder: (context, index) {
-                      return ToDoTile(
-                        taskName: db.toDoList[index][0],
-                        taskCompleted: db.toDoList[index][1],
-                        onChanged: (value) => checkBoxChanged(value, index),
-                        taskCompleteFunction: (context) => taskComplete(index),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
 
             // Button that generates the dialogue box
             Padding(
@@ -335,12 +401,12 @@ class _MyTimerState extends State<PomoTasker>
 }
 
 class timerButtons extends StatelessWidget {
-  TextEditingController _workMinutes = TextEditingController();
-  TextEditingController _workSeconds = TextEditingController();
-  TextEditingController _shortMinutes = TextEditingController();
-  TextEditingController _shortSeconds = TextEditingController();
-  TextEditingController _longMinutes = TextEditingController();
-  TextEditingController _longSeconds = TextEditingController();
+  final TextEditingController _workMinutes = TextEditingController();
+  final TextEditingController _workSeconds = TextEditingController();
+  final TextEditingController _shortMinutes = TextEditingController();
+  final TextEditingController _shortSeconds = TextEditingController();
+  final TextEditingController _longMinutes = TextEditingController();
+  final TextEditingController _longSeconds = TextEditingController();
 
   Duration workTime = getWorkTime();
   Duration shortTime = getShortTime();
@@ -684,7 +750,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                flex: 1,
+                // flex: 1,
 
                 //container that contains the 2 top buttons (start/pause, stop)
                 child: Container(
@@ -705,7 +771,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                     children: [
                       //start/pause text button
                       Expanded(
-                        flex: 1,
+                        // flex: 1,
                         child: Padding(
                           padding:
                               EdgeInsets.symmetric(vertical: 0, horizontal: 5),
@@ -715,7 +781,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
 
                       //stop text button
                       Expanded(
-                        flex: 1,
+                        // flex: 1,
                         child: Padding(
                           padding:
                               EdgeInsets.symmetric(vertical: 0, horizontal: 5),
@@ -728,7 +794,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
               ),
               const SizedBox(height: 5.0),
               Expanded(
-                flex: 1,
+                // flex: 1,
 
                 //container that contains the 2 bottom buttons (edit, reset)
                 child: Container(
@@ -749,7 +815,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                     children: [
                       //edit text button
                       Expanded(
-                        flex: 1,
+                        // flex: 1,
                         child: Padding(
                           padding:
                               EdgeInsets.symmetric(vertical: 0, horizontal: 5),
@@ -759,7 +825,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
 
                       //reset text button
                       Expanded(
-                        flex: 1,
+                        // flex: 1,
                         child: Padding(
                           padding:
                               EdgeInsets.symmetric(vertical: 0, horizontal: 5),
