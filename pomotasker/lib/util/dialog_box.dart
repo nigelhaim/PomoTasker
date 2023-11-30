@@ -143,7 +143,7 @@ class DialogBox extends StatelessWidget {
               ),
               controller: desc_controller,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(1d0),
+                contentPadding: EdgeInsets.all(10),
                 hintText: "Insert your task description here",
               ),
             ),
