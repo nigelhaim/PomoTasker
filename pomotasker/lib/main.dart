@@ -3,9 +3,8 @@
  * pomodoroscreen (Main screen)
  * hive_flutter (Database)
  */
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:pomotasker/pomodoroscreen.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'SplashScreen.dart'; // Adjust the import path as needed
 
@@ -18,7 +17,8 @@ void main() async {
    * Basically this is the database that saves the tasks on the phone
    */
   var box = await Hive.openBox('pomobox');
-
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 

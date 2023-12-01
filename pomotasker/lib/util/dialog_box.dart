@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pomotasker/util/box_button.dart';
 
 /**
  * This is where the dialogue box happens where the user inputs
@@ -179,6 +178,21 @@ class DialogBox extends StatelessWidget {
             ),
           ),
         ),
+        // ElevatedButton(
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: Color.fromARGB(0, 22, 71, 62),
+        //     disabledBackgroundColor: Colors.white,
+        //   ),
+        //   onPressed: onSave,
+        //   child: const Text(
+        //     'OK',
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontSize: 20,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromARGB(0, 22, 71, 62),
@@ -188,7 +202,7 @@ class DialogBox extends StatelessWidget {
           child: const Text(
             'OK',
             style: TextStyle(
-              color: Colors.white,
+              color: Color.fromARGB(255, 255, 255, 255),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -196,6 +210,10 @@ class DialogBox extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  bool enabled(bool title) {
+    return title;
   }
 
   Future<String> _selectDate(BuildContext context) async {

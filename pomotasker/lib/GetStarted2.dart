@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomotasker/pomodoroscreen.dart'; // Import the PomodoroScreen.dart file
-import 'package:shared_preferences/shared_preferences.dart';
-
-
+import '/pomodoroscreen.dart'; // Import the PomodoroScreen.dart file
 
 class GetStarted2 extends StatelessWidget {
   @override
@@ -52,7 +49,6 @@ class GetStarted2 extends StatelessWidget {
                         color: Color(0xff000000), // Adjust the color as needed
                       ),
                     ),
-
                     Text(
                       "Your Ultimate Productivity Companion!",
                       textAlign: TextAlign.start,
@@ -64,7 +60,6 @@ class GetStarted2 extends StatelessWidget {
                         color: Color(0xff000000), // Adjust the color as needed
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -89,8 +84,7 @@ class GetStarted2 extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                      child:
-                      Image(
+                      child: Image(
                         image: AssetImage("assets/illustration.jpg"),
                         height: 150,
                         width: 240,
@@ -107,7 +101,8 @@ class GetStarted2 extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                           fontSize: 12,
-                          color: Color(0xff000000), // Adjust the color as needed
+                          color:
+                              Color(0xff000000), // Adjust the color as needed
                         ),
                       ),
                     ),
@@ -128,7 +123,8 @@ class GetStarted2 extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                           fontSize: 12,
-                          color: Color(0xff000000), // Adjust the color as needed
+                          color:
+                              Color(0xff000000), // Adjust the color as needed
                         ),
                       ),
                     ),
@@ -136,7 +132,6 @@ class GetStarted2 extends StatelessWidget {
                 ),
               ),
             ),
-
             Padding(
               padding: EdgeInsets.fromLTRB(0, 30, 0, 100),
               child: MaterialButton(

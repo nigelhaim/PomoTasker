@@ -1,7 +1,6 @@
 //Extends the main screen of the timer
 
 import 'package:flutter/material.dart';
-import 'style_utils.dart';
 
 //Import timer features
 import 'package:custom_timer/custom_timer.dart';
@@ -11,10 +10,7 @@ import '/util/todo_tile.dart';
 import '/util/dialog_box.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '/data/database.dart';
-
-import 'package:pomotasker/util/task_Button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'GetStarted.dart';
 import 'GetStarted2.dart';
 
 //Runs the app
@@ -380,21 +376,22 @@ class _MyTimerState extends State<PomoTasker>
                             itemCount: db.toDoList.length,
                             itemBuilder: (context, index) {
                               return ElevatedButton(
-                                  onPressed: () =>
-                                      updateTask(db.toDoList[index], index),
-                                  child: ToDoTile(
-
-                                    taskName: db.toDoList[index][0],
-                                    taskCompleted: db.toDoList[index][1],
-                                    onChanged: (value) =>
-                                        checkBoxChanged(value, index),
-                                    taskCompleteFunction: (context) =>
-                                        taskComplete(index),
-                                  ),
+                                onPressed: () =>
+                                    updateTask(db.toDoList[index], index),
+                                child: ToDoTile(
+                                  taskName: db.toDoList[index][0],
+                                  taskCompleted: db.toDoList[index][1],
+                                  onChanged: (value) =>
+                                      checkBoxChanged(value, index),
+                                  taskCompleteFunction: (context) =>
+                                      taskComplete(index),
+                                ),
                                 style: ElevatedButton.styleFrom(
                                   primary: Color(0xFFF0F4F4),
-                                  padding: EdgeInsets.all(0), // Remove default padding
-                                  elevation: 0, // Remove the shadow// Set the background color to white
+                                  padding: EdgeInsets.all(
+                                      0), // Remove default padding
+                                  elevation:
+                                      0, // Remove the shadow// Set the background color to white
                                 ),
                               );
                             },
@@ -440,7 +437,6 @@ class timerButtons extends StatelessWidget {
   Duration shortTime = getShortTime();
   Duration longTime = getLongTime();
 
-  final _timerBox = Hive.box('pomobox');
   TimerData tb = TimerData();
   timerButtons({super.key});
   @override
@@ -820,9 +816,7 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                   ),
                 ),
               ),
-
               SizedBox(width: 5, height: 5),
-
               Expanded(
                 // flex: 1,
 
