@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomotasker/pomodoroscreen.dart'; // Adjust the import path as needed
+import 'GetStarted.dart'; // Import your GetStarted2.dart file
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -14,16 +12,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-      Duration(milliseconds: 1900), // Adjust the duration as needed
-          () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => PomoTasker(), // Navigate to your main screen
-          ),
-        );
-      },
-    );
+
+    // Delay for 2 seconds (adjust as needed)
+    Timer(Duration(seconds: 2), () {
+      // Navigate to GetStarted screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GetStarted(counter: 0), // Provide the initial value for counter
+        ),
+      );
+    });
   }
 
   @override

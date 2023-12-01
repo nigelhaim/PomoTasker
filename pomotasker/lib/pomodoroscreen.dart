@@ -14,6 +14,8 @@ import '/data/database.dart';
 
 import 'package:pomotasker/util/task_Button.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'GetStarted.dart';
+import 'GetStarted2.dart';
 
 //Runs the app
 void main() => runApp(PomoTasker());
@@ -285,7 +287,7 @@ class _MyTimerState extends State<PomoTasker>
             children: <Widget>[
               // Logo & app name
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -299,7 +301,7 @@ class _MyTimerState extends State<PomoTasker>
                       fit: BoxFit.scaleDown,
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       // App name
                       child: Text(
                         "PomoTasker",
@@ -318,6 +320,22 @@ class _MyTimerState extends State<PomoTasker>
               ),
             ],
           ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+              child: IconButton(
+                icon: Icon(Icons.info),
+                color: Colors.grey, // Set the color to black
+                onPressed: () {
+                  // Navigate to GetStarted screen when info icon is pressed
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GetStarted2()),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,

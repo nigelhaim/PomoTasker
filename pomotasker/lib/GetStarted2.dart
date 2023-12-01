@@ -3,57 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pomotasker/pomodoroscreen.dart'; // Import the PomodoroScreen.dart file
 import 'package:shared_preferences/shared_preferences.dart';
 
-class GetStarted extends StatelessWidget {
-  final int counter;
 
-  GetStarted({required this.counter});
-  // Function to check if it's the first time opening the app
-  Future<bool> isFirstTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('firstTime') ?? true;
-  }
 
-  // Function to mark that the app has been opened
-  Future<void> markFirstTimeOpened() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('firstTime', false);
-  }
-
+class GetStarted2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: isFirstTime(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // Future is still loading, return a loading indicator or an empty container
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        } else if (snapshot.hasError) {
-          // Future encountered an error, handle it accordingly
-          return Scaffold(
-            body: Center(
-              child: Text('Error loading data'),
-            ),
-          );
-        } else {
-          bool showGetStarted = snapshot.data ?? true;
-
-          if (showGetStarted) {
-            markFirstTimeOpened(); // Mark that the app has been opened
-            return _buildGetStartedScreen(context);
-          } else {
-            // If it's not the first time, go directly to PomoTasker screen
-            return PomoTasker();
-          }
-        }
-      },
-    );
-  }
-
-  Widget _buildGetStartedScreen(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
       body: Align(
