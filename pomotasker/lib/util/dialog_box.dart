@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 /**
  * This is where the dialogue box happens where the user inputs
  * the task details
- * TODO: IMPROVE THE DIALOGUE BOX FOR THE OTHER TASK DETAILS
- * TODO: IMPLEMENT DATE FORM
  * You can refer the code to improve the form made by Angelo
  */
 
@@ -178,21 +176,6 @@ class DialogBox extends StatelessWidget {
             ),
           ),
         ),
-        // ElevatedButton(
-        //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: Color.fromARGB(0, 22, 71, 62),
-        //     disabledBackgroundColor: Colors.white,
-        //   ),
-        //   onPressed: onSave,
-        //   child: const Text(
-        //     'OK',
-        //     style: TextStyle(
-        //       color: Colors.white,
-        //       fontSize: 20,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromARGB(0, 22, 71, 62),

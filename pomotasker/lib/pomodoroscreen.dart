@@ -137,13 +137,6 @@ class _MyTimerState extends State<PomoTasker>
    * This is the controller for the add task textbox
    */
   final _title_controller = TextEditingController();
-
-  // final _month_controller = TextEditingController();
-  // final _day_controller = TextEditingController();
-  // final _year_controller = TextEditingController();
-  // final _hour_controller = TextEditingController();
-  // final _min_controller = TextEditingController();
-  // final _am_pm_controller = TextEditingController();
   final _date_controller = TextEditingController();
   final _time_controller = TextEditingController();
   final _desc_controller = TextEditingController();
@@ -165,12 +158,6 @@ class _MyTimerState extends State<PomoTasker>
       db.toDoList.add([
         _title_controller.text,
         false,
-        // _month_controller.text,
-        // _day_controller.text,
-        // _year_controller.text,
-        // _hour_controller.text,
-        // _min_controller.text,
-        // _am_pm_controller.text,
         _date_controller.text,
         _time_controller.text,
         _desc_controller.text
@@ -182,7 +169,6 @@ class _MyTimerState extends State<PomoTasker>
 
   /**
    * This creates a dialogueBox where prompts the user of the task details
-   * TODO: NEEDS TO ADD THE DEADLINE DATE FORM AND DESCRIPTION TEXTBOX
    */
   void createNewTask() {
     _title_controller.text = "";
@@ -194,12 +180,6 @@ class _MyTimerState extends State<PomoTasker>
         builder: (context) {
           return DialogBox(
             title_controller: _title_controller,
-            // month_controller: _month_controller,
-            // day_controller: _day_controller,
-            // year_controller: _year_controller,
-            // hour_controller: _hour_controller,
-            // min_controller: _min_controller,
-            // am_pm_controller: _am_pm_controller,
             date_controller: _date_controller,
             time_controller: _time_controller,
             desc_controller: _desc_controller,
@@ -222,12 +202,6 @@ class _MyTimerState extends State<PomoTasker>
           _desc_controller.text = task[4].toString();
           return DialogBox(
             title_controller: _title_controller,
-            // month_controller: _month_controller,
-            // day_controller: _day_controller,
-            // year_controller: _year_controller,
-            // hour_controller: _hour_controller,
-            // min_controller: _min_controller,
-            // am_pm_controller: _am_pm_controller,
             date_controller: _date_controller,
             time_controller: _time_controller,
             desc_controller: _desc_controller,
@@ -360,7 +334,6 @@ class _MyTimerState extends State<PomoTasker>
                   /**
                          * ListView is handles the rendering of tasks got from the databases
                          * It reliles on the ToDoTile class on the 
-                         * todo_tile.dart file 
                          * basically it also acts as the for loop of the tasks 
                          */
                   Expanded(
@@ -438,6 +411,7 @@ class timerButtons extends StatelessWidget {
   Duration longTime = getLongTime();
 
   TimerData tb = TimerData();
+
   timerButtons({super.key});
   @override
   Widget build(BuildContext context) {
