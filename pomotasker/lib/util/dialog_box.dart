@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pomotasker/util/box_button.dart';
 
 /**
- * This is where the dialogue box happens where the user inputs 
- * the task details 
- * TODO: IMPROVE THE DIALOGUE BOX FOR THE OTHER TASK DETAILS 
- * TODO: IMPLEMENT DATE FORM 
- * You can refer the code to improve the form made by Angelo 
+ * This is where the dialogue box happens where the user inputs
+ * the task details
+ * TODO: IMPROVE THE DIALOGUE BOX FOR THE OTHER TASK DETAILS
+ * TODO: IMPLEMENT DATE FORM
+ * You can refer the code to improve the form made by Angelo
  */
 
 class DialogBox extends StatelessWidget {
@@ -31,7 +30,7 @@ class DialogBox extends StatelessWidget {
     return AlertDialog(
       scrollable: true,
       actionsAlignment: MainAxisAlignment.center,
-      backgroundColor: Colors.redAccent,
+      backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
       content: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -43,21 +42,25 @@ class DialogBox extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.white,
-            ),
-            child: TextField(
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
               ),
-              controller: title_controller,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Insert Task Name Here",
+              child: TextField(
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                controller: title_controller,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Insert Task Name Here",
+                ),
               ),
             ),
           ),
@@ -69,25 +72,28 @@ class DialogBox extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.white,
-            ),
-            child: TextField(
-              controller: date_controller,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
               ),
-              decoration: InputDecoration(
-                filled: false,
+              child: TextField(
+                controller: date_controller,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                decoration: InputDecoration(
+                  filled: false,
+                ),
+                readOnly: true,
+                onTap: () {
+                  _selectDate(context);
+                },
               ),
-              readOnly: true,
-              onTap: () {
-                _selectDate(context);
-              },
             ),
           ),
 
@@ -99,25 +105,28 @@ class DialogBox extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.white,
-            ),
-            child: TextField(
-              controller: time_controller,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
               ),
-              decoration: InputDecoration(
-                filled: false,
+              child: TextField(
+                controller: time_controller,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                decoration: InputDecoration(
+                  filled: false,
+                ),
+                readOnly: true,
+                onTap: () {
+                  _selectTime(context);
+                },
               ),
-              readOnly: true,
-              onTap: () {
-                _selectTime(context);
-              },
             ),
           ),
           // Description TextField
@@ -128,23 +137,26 @@ class DialogBox extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.white,
-            ),
-            child: TextField(
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
               ),
-              controller: desc_controller,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
-                hintText: "Insert your task description here",
+              child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                controller: desc_controller,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10),
+                  hintText: "Insert your task description here",
+                ),
               ),
             ),
           ),
@@ -166,6 +178,21 @@ class DialogBox extends StatelessWidget {
             ),
           ),
         ),
+        // ElevatedButton(
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: Color.fromARGB(0, 22, 71, 62),
+        //     disabledBackgroundColor: Colors.white,
+        //   ),
+        //   onPressed: onSave,
+        //   child: const Text(
+        //     'OK',
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontSize: 20,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromARGB(0, 22, 71, 62),
@@ -175,7 +202,7 @@ class DialogBox extends StatelessWidget {
           child: const Text(
             'OK',
             style: TextStyle(
-              color: Colors.white,
+              color: Color.fromARGB(255, 255, 255, 255),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -183,6 +210,10 @@ class DialogBox extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  bool enabled(bool title) {
+    return title;
   }
 
   Future<String> _selectDate(BuildContext context) async {

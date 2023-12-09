@@ -1,7 +1,6 @@
 //Extends the main screen of the timer
 
 import 'package:flutter/material.dart';
-import 'style_utils.dart';
 
 //Import timer features
 import 'package:custom_timer/custom_timer.dart';
@@ -11,13 +10,14 @@ import '/util/todo_tile.dart';
 import '/util/dialog_box.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '/data/database.dart';
-
-import 'package:pomotasker/util/task_Button.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'GetStarted2.dart';
 
 //Runs the app
 void main() => runApp(PomoTasker());
 
 //Extends the StatefulWidget
+
 class PomoTasker extends StatefulWidget {
 //Initiates the state of the timer
   @override
@@ -81,14 +81,16 @@ class _MyTimerState extends State<PomoTasker>
   int type = 0;
   late CustomTimerController _controller = CustomTimerController(
       /**
-     * Sets the controller of the timer 
+     * Sets the controller of the timer
      */
 
       vsync: this,
-      begin: workTime, //Beginning of the timer
-      end: Duration(minutes: 00, seconds: 00), //Expected end of the timer
-      initialState: CustomTimerState
-          .reset, //Initial state is reset which is goes back to the begin time
+      begin: workTime,
+      //Beginning of the timer
+      end: Duration(minutes: 00, seconds: 00),
+      //Expected end of the timer
+      initialState: CustomTimerState.reset,
+      //Initial state is reset which is goes back to the begin time
       interval: CustomTimerInterval
           .milliseconds); //Changes the timer time by milliseconds
 
@@ -106,16 +108,16 @@ class _MyTimerState extends State<PomoTasker>
   final _taskBox = Hive.box('pomobox');
   ToDoDatabase db = ToDoDatabase();
 
-/**
- * This function acts as the loading of tasks in the to-do widget 
- */
+  /**
+   * This function acts as the loading of tasks in the to-do widget
+   */
   @override
   void initState() {
     // if this is the 1st time ever opening the app, then create default data
     /**
      * You can find references /data/database.dart
-     * It will load Make tutorial and do Exercises task 
-     * when the user opens the app for the first time 
+     * It will load Make tutorial and do Exercises task
+     * when the user opens the app for the first time
      */
     if (_taskBox.get("TODOLIST") == null) {
       db.createInitialData();
@@ -135,6 +137,7 @@ class _MyTimerState extends State<PomoTasker>
    * This is the controller for the add task textbox
    */
   final _title_controller = TextEditingController();
+
   // final _month_controller = TextEditingController();
   // final _day_controller = TextEditingController();
   // final _year_controller = TextEditingController();
@@ -154,7 +157,7 @@ class _MyTimerState extends State<PomoTasker>
 
   //Save new task
   /**
-   * When the user press confirm button on the createNewTask it closes the dialogue 
+   * When the user press confirm button on the createNewTask it closes the dialogue
    * saves in the database and shows the new task on the screen
    */
   void saveNewTask() {
@@ -177,11 +180,15 @@ class _MyTimerState extends State<PomoTasker>
     db.updateDataBase();
   }
 
-/**
- * This creates a dialogueBox where prompts the user of the task details 
- * TODO: NEEDS TO ADD THE DEADLINE DATE FORM AND DESCRIPTION TEXTBOX
- */
+  /**
+   * This creates a dialogueBox where prompts the user of the task details
+   * TODO: NEEDS TO ADD THE DEADLINE DATE FORM AND DESCRIPTION TEXTBOX
+   */
   void createNewTask() {
+    _title_controller.text = "";
+    _date_controller.text = "";
+    _time_controller.text = "";
+    _desc_controller.text = "";
     showDialog(
         context: context,
         builder: (context) {
@@ -240,6 +247,10 @@ class _MyTimerState extends State<PomoTasker>
         _desc_controller.text.toString()
       ];
     });
+    _title_controller.text = "";
+    _date_controller.text = "";
+    _time_controller.text = "";
+    _desc_controller.text = "";
     Navigator.of(context).pop();
     db.updateDataBase();
   }
@@ -257,58 +268,156 @@ class _MyTimerState extends State<PomoTasker>
   }
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //Hugs the whole components of the app
       home: Scaffold(
+        backgroundColor: Color(0xFFF0F4F4),
         appBar: AppBar(
           elevation: 0,
-          backgroundColor:
-              Colors.greenAccent, //To be changed in the preffered theme color
-          title: Text(
-            "PomoTasker",
-            style: textStyle(24, Colors.redAccent,
-                FontWeight.w700), //Refer on the utils.dart file
+          backgroundColor: Color(0xFFF0F4F4),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              // Logo & app name
+              Padding(
+                padding: EdgeInsets.fromLTRB(35, 0, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    // Logo
+                    Image(
+                      image: AssetImage("assets/logo.png"),
+                      height: 40,
+                      width: 60,
+                      fit: BoxFit.scaleDown,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      // App name
+                      child: Text(
+                        "PomoTasker",
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.clip,
+                        style: GoogleFonts.ubuntuMono(
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14,
+                          color: Color(0xFFC65F58),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+              child: IconButton(
+                icon: Icon(Icons.info),
+                color: Colors.grey, // Set the color to black
+                onPressed: () {
+                  // Navigate to GetStarted screen when info icon is pressed
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GetStarted2()),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            /**
-             * BuildCustomTimer is the method that creates the whole 
-             * timer feature
-             */
-            BuildCustomTimer(_controller),
-            /**
-             * ListView is handles the rendering of tasks got from the databases
-             * It reliles on the ToDoTile class on the 
-             * todo_tile.dart file 
-             * basically it also acts as the for loop of the tasks 
-             */
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: db.toDoList.length,
-              itemBuilder: (context, index) {
-                return ElevatedButton(
-                    onPressed: () => updateTask(db.toDoList[index], index),
-                    child: ToDoTile(
-                      taskName: db.toDoList[index][0],
-                      taskCompleted: db.toDoList[index][1],
-                      onChanged: (value) => checkBoxChanged(value, index),
-                      taskCompleteFunction: (context) => taskComplete(index),
-                    ));
-              },
+            // Timer portion
+            Expanded(
+              // flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  // "timer text
+                  Expanded(
+                    // flex: 3,
+                    child: Container(
+                      /**
+                         * BuildCustomTimer is the method that creates the whole 
+                         * timer feature
+                         */
+                      child: BuildCustomTimer(_controller),
+                    ),
+                  ),
+                  /**
+                         * ListView is handles the rendering of tasks got from the databases
+                         * It reliles on the ToDoTile class on the 
+                         * todo_tile.dart file 
+                         * basically it also acts as the for loop of the tasks 
+                         */
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: db.toDoList.length,
+                            itemBuilder: (context, index) {
+                              return ElevatedButton(
+                                onPressed: () =>
+                                    updateTask(db.toDoList[index], index),
+                                child: ToDoTile(
+                                  taskName: db.toDoList[index][0],
+                                  taskCompleted: db.toDoList[index][1],
+                                  onChanged: (value) =>
+                                      checkBoxChanged(value, index),
+                                  taskCompleteFunction: (context) =>
+                                      taskComplete(index),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xFFF0F4F4),
+                                  padding: EdgeInsets.all(
+                                      0), // Remove default padding
+                                  elevation:
+                                      0, // Remove the shadow// Set the background color to white
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            /**
-             * This is the button that generates the dialogue box
-             */
-            FloatingActionButton(
-                //TODO COMPLETE ADD TASK
-                // onPressed: createNewTask, child: taskButton()
+            // Centered ListView for rendering tasks
+
+            // Button that generates the dialogue box
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 15),
+              child: FloatingActionButton(
                 onPressed: createNewTask,
-                child: Icon(Icons.add)), //Nigel's button
-            // taskButton(), //Angelo's button
+                backgroundColor: Color(0xFFF2756D), // Set color to F2756D
+                child: Icon(
+                  Icons.add,
+                  size: 35, // Increase size by 2
+                  color: Colors.white, // Set color to white
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -317,36 +426,35 @@ class _MyTimerState extends State<PomoTasker>
 }
 
 class timerButtons extends StatelessWidget {
-  TextEditingController _workMinutes = TextEditingController();
-  TextEditingController _workSeconds = TextEditingController();
-  TextEditingController _shortMinutes = TextEditingController();
-  TextEditingController _shortSeconds = TextEditingController();
-  TextEditingController _longMinutes = TextEditingController();
-  TextEditingController _longSeconds = TextEditingController();
+  final TextEditingController _workMinutes = TextEditingController();
+  final TextEditingController _workSeconds = TextEditingController();
+  final TextEditingController _shortMinutes = TextEditingController();
+  final TextEditingController _shortSeconds = TextEditingController();
+  final TextEditingController _longMinutes = TextEditingController();
+  final TextEditingController _longSeconds = TextEditingController();
 
   Duration workTime = getWorkTime();
   Duration shortTime = getShortTime();
   Duration longTime = getLongTime();
 
-  final _timerBox = Hive.box('pomobox');
   TimerData tb = TimerData();
   timerButtons({super.key});
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       style: TextButton.styleFrom(
-        backgroundColor: Colors.redAccent,
-        foregroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+        foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
       ),
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
           actionsAlignment: MainAxisAlignment.center,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
           title: const Center(
               child: Text(
             'Edit Timer',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.w900),
           )),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -359,46 +467,49 @@ class timerButtons extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _workMinutes,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: workTime.inMinutes.toString(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(right: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _workMinutes,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: workTime.inMinutes.toString(),
+                          ),
                         ),
                       ),
-                    ),
-                    Text(":",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20)),
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _workSeconds,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '00',
+                      Text(":",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _workSeconds,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: '00',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const Text(
@@ -408,46 +519,49 @@ class timerButtons extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(right: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _shortMinutes,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: shortTime.inMinutes.toString(),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(right: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _shortMinutes,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: shortTime.inMinutes.toString(),
+                          ),
                         ),
                       ),
-                    ),
-                    Text(":",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20)),
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      width: 90,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        controller: _shortSeconds,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '00',
+                      Text(":",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        width: 90,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          controller: _shortSeconds,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: '00',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const Text(
@@ -543,7 +657,15 @@ class timerButtons extends StatelessWidget {
           ],
         ),
       ),
-      child: const Text('Edit Timer'),
+      child: const Text(
+        'Edit Timer',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontFamily: 'UbuntuMono',
+          fontSize: 16, // Set the font size
+          color: Color(0xFF363636),
+        ),
+      ),
     );
   }
 }
@@ -553,12 +675,13 @@ class timerButtons extends StatelessWidget {
  * a small error here is the button double inputs for some reason
  * therefore I implemented pressedOnce boolean to prevent the double input
  */
-Expanded BuildCustomTimer(CustomTimerController _controller) {
+
+Column BuildCustomTimer(CustomTimerController _controller) {
   bool working = true;
   bool shortBreak = false;
   bool longBreak = false;
   bool pressedOnce = false;
-  String timerType = "Working";
+  String timerType = "Time to Work!";
   _controller.state.addListener(() {
     if (_controller.state.value == CustomTimerState.finished) {
       // print("The " + _controller.state.value.toString());
@@ -601,64 +724,228 @@ Expanded BuildCustomTimer(CustomTimerController _controller) {
    * This returns the timer itself which is also has the buttons 
    * and the name of the mode of timer
    */
-
-  return Expanded(
-    child: Column(children: <Widget>[
+  return Column(
+    children: [
       CustomTimer(
-          controller: _controller,
-          builder: (state, remaining) {
-            return Column(
-              children: [
-                Text(timerType),
-                // Text("${state.name}", style: TextStyle(fontSize: 24)),
-                Text("${remaining.minutes}:${remaining.seconds}",
-                    style: const TextStyle(fontSize: 24)),
-              ],
-            );
-          }),
-      const SizedBox(height: 24.0),
-      Row(
-        children: [
-          createButton("Start", _controller),
-          createButton("Reset", _controller),
-          createButton("Stop", _controller),
-          timerButtons(),
-        ],
-      )
-    ]),
-  );
-}
-
-/**
- * This is creates the button for the timer you can edit here for the front-end
- */
-
-Expanded createButton(String button, CustomTimerController _controller) {
-  return Expanded(
-    child: FilledButton(
-      style: TextButton.styleFrom(
-        backgroundColor: Colors.redAccent,
-        foregroundColor: Colors.white,
+        controller: _controller,
+        builder: (state, remaining) {
+          return Column(
+            children: [
+              Text(
+                timerType,
+                style: GoogleFonts.ubuntu(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                "${remaining.minutes}:${remaining.seconds}",
+                style: GoogleFonts.ubuntuMono(
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 95,
+                  color: Color(0xFF363636), // Change the color as needed
+                ),
+              ),
+            ],
+          );
+        },
       ),
-      onPressed: () {
-        if (button == "Start") {
-          const Text("Pause");
-          _controller.start();
-        } else if (button == "Pause") {
-          _controller.pause();
-        } else if (button == "Reset") {
-          _controller.reset();
-          workTime = getWorkTime();
-          shortTime = getShortTime();
-          longTime = getLongTime();
-        } else if (button == "Stop") {
-          _controller.finish();
-          // print("Stop button pressed");
-        } else if (button == "Modify") {
-          timerButtons();
-        }
-      },
-      child: Text(button),
-    ),
+
+      //buttons container
+      Expanded(
+        flex: 1,
+
+        //container that contains all the 4 text buttons
+        child: Container(
+          margin: EdgeInsets.all(0),
+          padding: EdgeInsets.all(0),
+          width: 270,
+          height: 85,
+          decoration: BoxDecoration(
+            color: Color(0x00000000),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.zero,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                // flex: 1,
+
+                //container that contains the 2 top buttons (start/pause, stop)
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 270,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Color(0x00000000),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //start/pause text button
+                      Expanded(
+                        // flex: 1,
+                        child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+                          child: FilledButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromRGBO(242, 117, 109, 1.0),
+                              foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+                            ),
+                            onPressed: () {
+                              _controller.start();
+                            },
+                            child: Text(
+                              "Start",
+                              style: GoogleFonts.ubuntu(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Color(0xFF363636),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      //stop text button
+                      Expanded(
+                        // flex: 1,
+                        child: FilledButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+                            foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+                          ),
+                          onPressed: () {
+                            _controller.finish();
+                          },
+                          child: Text(
+                            "Stop",
+                            style: GoogleFonts.ubuntu(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xFF363636),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 5, height: 5),
+              Expanded(
+                // flex: 1,
+
+                //container that contains the 2 bottom buttons (edit, reset)
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: 300,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Color(0x00000000),
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      //edit text button
+                      Expanded(
+                        // flex: 1,
+                        child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+                          child: timerButtons(),
+                        ),
+                      ),
+
+                      //reset text button
+                      Expanded(
+                        // flex: 1,
+                        child: FilledButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+                            foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+                          ),
+                          onPressed: () {
+                            _controller.reset();
+                          },
+                          child: Text(
+                            "Reset",
+                            style: GoogleFonts.ubuntu(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xFF363636),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
   );
 }
+
+// /**
+//  * This is creates the button for the timer you can edit here for the front-end
+//  */
+
+// Expanded createButton(String button, CustomTimerController _controller) {
+//   return Expanded(
+//     child: FilledButton(
+//       style: TextButton.styleFrom(
+//         backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+//         foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+//       ),
+//       onPressed: () {
+//         if (button == "Start") {
+//           const Text("Pause");
+//           _controller.start();
+//         } else if (button == "Pause") {
+//           _controller.pause();
+//         } else if (button == "Reset") {
+//           _controller.reset();
+//           workTime = getWorkTime();
+//           shortTime = getShortTime();
+//           longTime = getLongTime();
+//         } else if (button == "Stop") {
+//           _controller.finish();
+//           // print("Stop button pressed");
+//         } else if (button == "Modify") {
+//           timerButtons();
+//         }
+//       },
+//       child: Text(
+//         button,
+//         style: GoogleFonts.ubuntu(
+//           fontWeight: FontWeight.bold,
+//           fontSize: 16,
+//           color: Color(0xFF363636),
+//         ),
+//       ),
+//     ),
+//   );
+// }
