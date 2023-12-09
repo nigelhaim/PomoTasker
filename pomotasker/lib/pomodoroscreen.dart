@@ -799,17 +799,46 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                         child: Padding(
                           padding:
                               EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                          child: createButton("Start", _controller),
+                          child: FilledButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromRGBO(242, 117, 109, 1.0),
+                              foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+                            ),
+                            onPressed: () {
+                              _controller.start();
+                            },
+                            child: Text(
+                              "Start",
+                              style: GoogleFonts.ubuntu(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Color(0xFF363636),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
 
                       //stop text button
                       Expanded(
                         // flex: 1,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                          child: createButton("Stop", _controller),
+                        child: FilledButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+                            foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+                          ),
+                          onPressed: () {
+                            _controller.finish();
+                          },
+                          child: Text(
+                            "Stop",
+                            style: GoogleFonts.ubuntu(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xFF363636),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -850,10 +879,22 @@ Column BuildCustomTimer(CustomTimerController _controller) {
                       //reset text button
                       Expanded(
                         // flex: 1,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                          child: createButton("Reset", _controller),
+                        child: FilledButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+                            foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+                          ),
+                          onPressed: () {
+                            _controller.reset();
+                          },
+                          child: Text(
+                            "Reset",
+                            style: GoogleFonts.ubuntu(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xFF363636),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -868,43 +909,43 @@ Column BuildCustomTimer(CustomTimerController _controller) {
   );
 }
 
-/**
- * This is creates the button for the timer you can edit here for the front-end
- */
+// /**
+//  * This is creates the button for the timer you can edit here for the front-end
+//  */
 
-Expanded createButton(String button, CustomTimerController _controller) {
-  return Expanded(
-    child: FilledButton(
-      style: TextButton.styleFrom(
-        backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
-        foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
-      ),
-      onPressed: () {
-        if (button == "Start") {
-          const Text("Pause");
-          _controller.start();
-        } else if (button == "Pause") {
-          _controller.pause();
-        } else if (button == "Reset") {
-          _controller.reset();
-          workTime = getWorkTime();
-          shortTime = getShortTime();
-          longTime = getLongTime();
-        } else if (button == "Stop") {
-          _controller.finish();
-          // print("Stop button pressed");
-        } else if (button == "Modify") {
-          timerButtons();
-        }
-      },
-      child: Text(
-        button,
-        style: GoogleFonts.ubuntu(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-          color: Color(0xFF363636),
-        ),
-      ),
-    ),
-  );
-}
+// Expanded createButton(String button, CustomTimerController _controller) {
+//   return Expanded(
+//     child: FilledButton(
+//       style: TextButton.styleFrom(
+//         backgroundColor: Color.fromRGBO(242, 117, 109, 1.0),
+//         foregroundColor: Color.fromRGBO(54, 54, 54, 1.0),
+//       ),
+//       onPressed: () {
+//         if (button == "Start") {
+//           const Text("Pause");
+//           _controller.start();
+//         } else if (button == "Pause") {
+//           _controller.pause();
+//         } else if (button == "Reset") {
+//           _controller.reset();
+//           workTime = getWorkTime();
+//           shortTime = getShortTime();
+//           longTime = getLongTime();
+//         } else if (button == "Stop") {
+//           _controller.finish();
+//           // print("Stop button pressed");
+//         } else if (button == "Modify") {
+//           timerButtons();
+//         }
+//       },
+//       child: Text(
+//         button,
+//         style: GoogleFonts.ubuntu(
+//           fontWeight: FontWeight.bold,
+//           fontSize: 16,
+//           color: Color(0xFF363636),
+//         ),
+//       ),
+//     ),
+//   );
+// }
